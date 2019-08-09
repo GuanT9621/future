@@ -31,15 +31,16 @@ package sort;
 class QuickSort {
 
     static int[] sort(int[] array, int head, int tail) {
-        return sort1(array, head, tail);
+        quickSort2(array, head, tail);
+        return array;
     }
 
     /**
-     * wiki 最优算法
+     * wiki 最优算法 简化版的指针交换法
      */
-    static int[] sort1(int[] array, int head, int tail) {
+    static void sort1(int[] array, int head, int tail) {
         if (head >= tail || array == null || array.length <= 1) {
-            return array;
+            return;
         }
         int i = head, j = tail, pivot = array[(head + tail) / 2];
         while (i <= j) {
@@ -49,6 +50,7 @@ class QuickSort {
             while (array[j] > pivot) {
                 --j;
             }
+            // 这里一定是 array[i] > pivot && array[j] < pivot 的情况
             if (i < j) {
                 int t = array[i];
                 array[i] = array[j];
@@ -61,7 +63,6 @@ class QuickSort {
         }
         sort1(array, head, j);
         sort1(array, i, tail);
-        return array;
     }
 
 
@@ -69,7 +70,7 @@ class QuickSort {
      * 挖坑法
      * 左右换坑: partition方法则实现元素的移动，让数列中的元素依据自身大小，分别移动到基准元素的左右两边。在这里，我们使用移动方式是挖坑法。
      */
-    public static void quickSort1(int[] arr, int startIndex, int endIndex) {
+    static void quickSort1(int[] arr, int startIndex, int endIndex) {
         // 递归结束条件：startIndex大等于endIndex的时候
         if (startIndex >= endIndex) {
             return;
@@ -120,7 +121,7 @@ class QuickSort {
      * 指针交换法
      * 和挖坑法相比，指针交换法在partition方法中进行的元素交换次数更少。
      */
-    public static void quickSort2(int[] arr, int startIndex, int endIndex) {
+    static void quickSort2(int[] arr, int startIndex, int endIndex) {
         // 递归结束条件：startIndex大等于endIndex的时候
         if (startIndex >= endIndex) {
             return;
@@ -139,7 +140,7 @@ class QuickSort {
         int right = endIndex;
         while ( left != right) {
             //控制right指针比较并左移
-            while (left<right && arr[right] > pivot){
+            while (left < right && arr[right] > pivot){
                 right--;
             }
             //控制right指针比较并右移

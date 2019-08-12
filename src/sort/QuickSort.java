@@ -15,11 +15,11 @@ package sort;
  * 3 递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。
  * <p>
  * 复杂度
- * 时间复杂度（平均）O(nlog2n)
- * 时间复杂度（最好）O(nlog2n)
- * 时间复杂度（最坏）O(n^2)
- * 空间复杂度 O(nlog2n)
- * 稳定性 不稳定
+ *  时间复杂度（平均）O(nlog2n)
+ *  时间复杂度（最好）O(nlog2n)
+ *  时间复杂度（最坏）O(n^2)
+ *  空间复杂度 O(nlog2n)
+ *  稳定性 不稳定
  * <p>
  * 思路：二分法思路。（基准排序）（递归调用）
  * 冒泡排序的优化：每一趟冒泡将数据分割成两部分。
@@ -70,21 +70,21 @@ class QuickSort {
      * 挖坑法
      * 左右换坑: partition方法则实现元素的移动，让数列中的元素依据自身大小，分别移动到基准元素的左右两边。在这里，我们使用移动方式是挖坑法。
      */
-    static void quickSort1(int[] arr, int startIndex, int endIndex) {
+    static void quickSort1(int[] array, int startIndex, int endIndex) {
         // 递归结束条件：startIndex大等于endIndex的时候
         if (startIndex >= endIndex) {
             return;
         }
         // 得到基准元素位置
-        int pivotIndex = partition1(arr, startIndex, endIndex);
+        int pivotIndex = partition1(array, startIndex, endIndex);
         // 用分治法递归数列的两部分
-        quickSort1(arr, startIndex, pivotIndex - 1);
-        quickSort1(arr, pivotIndex + 1, endIndex);
+        quickSort1(array, startIndex, pivotIndex - 1);
+        quickSort1(array, pivotIndex + 1, endIndex);
     }
 
-    private static int partition1(int[] arr, int startIndex, int endIndex) {
+    private static int partition1(int[] array, int startIndex, int endIndex) {
         // 取第一个位置的元素作为基准元素
-        int pivot = arr[startIndex];
+        int pivot = array[startIndex];
         int left = startIndex;
         int right = endIndex;
         // 坑的位置，初始等于pivot的位置
@@ -93,9 +93,8 @@ class QuickSort {
         while (right >= left) {
             //right指针从右向左进行比较
             while (right >= left) {
-
-                if (arr[right] < pivot) {
-                    arr[left] = arr[right];
+                if (array[right] < pivot) {
+                    array[left] = array[right];
                     index = right;
                     left++;
                     break;
@@ -104,8 +103,8 @@ class QuickSort {
             }
             //left指针从左向右进行比较
             while (right >= left) {
-                if (arr[left] > pivot) {
-                    arr[right] = arr[left];
+                if (array[left] > pivot) {
+                    array[right] = array[left];
                     index = left;
                     right--;
                     break;
@@ -113,7 +112,7 @@ class QuickSort {
                 left++;
             }
         }
-        arr[index] = pivot;
+        array[index] = pivot;
         return index;
     }
 
@@ -121,43 +120,43 @@ class QuickSort {
      * 指针交换法
      * 和挖坑法相比，指针交换法在partition方法中进行的元素交换次数更少。
      */
-    static void quickSort2(int[] arr, int startIndex, int endIndex) {
+    static void quickSort2(int[] array, int startIndex, int endIndex) {
         // 递归结束条件：startIndex大等于endIndex的时候
         if (startIndex >= endIndex) {
             return;
         }
         // 得到基准元素位置
-        int pivotIndex = partition2(arr, startIndex, endIndex);
+        int pivotIndex = partition2(array, startIndex, endIndex);
         // 根据基准元素，分成两部分递归排序
-        quickSort2(arr, startIndex, pivotIndex - 1);
-        quickSort2(arr, pivotIndex + 1, endIndex);
+        quickSort2(array, startIndex, pivotIndex - 1);
+        quickSort2(array, pivotIndex + 1, endIndex);
     }
 
-    private static int partition2(int[] arr, int startIndex, int endIndex) {
+    private static int partition2(int[] array, int startIndex, int endIndex) {
         // 取第一个位置的元素作为基准元素
-        int pivot = arr[startIndex];
+        int pivot = array[startIndex];
         int left = startIndex;
         int right = endIndex;
         while ( left != right) {
             //控制right指针比较并左移
-            while (left < right && arr[right] > pivot){
+            while (left < right && array[right] > pivot){
                 right--;
             }
             //控制right指针比较并右移
-            while (left<right && arr[left] <= pivot) {
+            while (left<right && array[left] <= pivot) {
                 left++;
             }
             //交换left和right指向的元素
             if (left<right) {
-                int p = arr[left];
-                arr[left] = arr[right];
-                arr[right] = p;
+                int p = array[left];
+                array[left] = array[right];
+                array[right] = p;
             }
         }
         //pivot和指针重合点交换
-        int p = arr[left];
-        arr[left] = arr[startIndex];
-        arr[startIndex] = p;
+        int p = array[left];
+        array[left] = array[startIndex];
+        array[startIndex] = p;
         return left;
     }
 

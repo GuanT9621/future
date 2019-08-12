@@ -35,6 +35,16 @@ public class SortTester {
         System.out.print("插入排序：");
         print(InsertionSort.sort(array));
         System.out.println(" 耗时：" + (System.nanoTime() - s3));
+
+        long s4 = System.nanoTime();
+        System.out.print("归并排序：");
+        print(MergeSort.sort(array));
+        System.out.println(" 耗时：" + (System.nanoTime() - s4));
+
+        long s5 = System.nanoTime();
+        System.out.print("希尔排序：");
+        print(ShellSort.sort(array));
+        System.out.println(" 耗时：" + (System.nanoTime() - s5));
     }
 
 }

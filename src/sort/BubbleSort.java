@@ -16,17 +16,22 @@ package sort;
  * 4 重复步骤1~3，直到排序完成。
  *
  * 复杂度
- * 时间复杂度（平均）O(n^2)
- * 时间复杂度（最好）O(n^2)
- * 时间复杂度（最坏）O(n)
- * 空间复杂度 O(1)
- * 稳定性 稳定
+ *  时间复杂度（平均）O(n^2)
+ *  时间复杂度（最好）O(n^2)
+ *  时间复杂度（最坏）O(n)
+ *  空间复杂度 O(1)
+ *  稳定性 稳定
  *
  * 思路：每一趟冒泡只浮出一个元素。
  */
 class BubbleSort {
 
     static int[] sort(int[] array) {
+        sort1(array);
+        return array;
+    }
+
+    static void sort1(int[] array) {
         for (int i = 0; i < array.length - 1; i++) { /** 循环次数为元素个数 */
             for (int j = 0; j < array.length - 1 - i; j++) { /** 对比次数为未排序的元素个数 */
                 /** 每次只对比当前元素和下一个元素，然后交换。保证了下次对比时取到的当前元素必定是浮上来的那个元素。 */
@@ -37,7 +42,6 @@ class BubbleSort {
                 }
             }
         }
-        return array;
     }
 
 }

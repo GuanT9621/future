@@ -36,24 +36,18 @@ package sort;
  */
 class MergeSort {
 
-    static int[] sort(int[] array) {
-        int[] result = new int[array.length];
-        sort1(array, result, 0, array.length - 1);
-        return result;
-    }
-
     /**
      * 递归法（Top-down）
      */
-    static void sort1(int[] arr, int[] result, int start, int end) {
+    static void sort(int[] arr, int[] result, int start, int end) {
         if (start >= end)
             return;
         int len = end - start, mid = (len >> 1) + start;
         int start1 = start, end1 = mid;
         int start2 = mid + 1, end2 = end;
 
-        sort1(arr, result, start1, end1);
-        sort1(arr, result, start2, end2);
+        sort(arr, result, start1, end1);
+        sort(arr, result, start2, end2);
 
         int k = start;
         while (start1 <= end1 && start2 <= end2)
@@ -72,28 +66,28 @@ class MergeSort {
     /**
      * 迭代法（Bottom-up）
      */
-    static void sort2(int[] arr) {
-        int[] orderedArr = new int[arr.length];
+    static void sort(int[] array) {
+        int[] orderedArr = new int[array.length];
 
-        for (int i = 2; i < arr.length * 2; i *= 2) {
-            for (int j = 0; j < (arr.length + i - 1) / i; j++) {
+        for (int i = 2; i < array.length * 2; i *= 2) {
+            for (int j = 0; j < (array.length + i - 1) / i; j++) {
                 int left = i * j;
-                int mid = left + i / 2 >= arr.length ? (arr.length - 1) : (left + i / 2);
-                int right = i * (j + 1) - 1 >= arr.length ? (arr.length - 1) : (i * (j + 1) - 1);
+                int mid = left + i / 2 >= array.length ? (array.length - 1) : (left + i / 2);
+                int right = i * (j + 1) - 1 >= array.length ? (array.length - 1) : (i * (j + 1) - 1);
                 int start = left, l = left, m = mid;
                 while (l < mid && m <= right) {
-                    if (arr[l] < arr[m]) {
-                        orderedArr[start++] = arr[l++];
+                    if (array[l] < array[m]) {
+                        orderedArr[start++] = array[l++];
                     } else {
-                        orderedArr[start++] = arr[m++];
+                        orderedArr[start++] = array[m++];
                     }
                 }
                 while (l < mid)
-                    orderedArr[start++] = arr[l++];
+                    orderedArr[start++] = array[l++];
                 while (m <= right)
-                    orderedArr[start++] = arr[m++];
+                    orderedArr[start++] = array[m++];
 
-                System.arraycopy(orderedArr, left, arr, left, right - left + 1);
+                System.arraycopy(orderedArr, left, array, left, right - left + 1);
             }
         }
     }

@@ -34,12 +34,7 @@ package sort;
  */
 class ShellSort {
 
-    static int[] sort(int[] array) {
-        sort1(array);
-        return array;
-    }
-
-    static void sort1(int[] array) {
+    static void sort(int[] array) {
         int number = array.length / 2;
         int i, j, temp;
         while (number >= 1) {

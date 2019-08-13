@@ -27,38 +27,34 @@ package sort;
 class CountingSort {
 
     static int[] sort(int[] array) {
-        return countingSort(array);
-    }
-
-    static int[] countingSort(int[] A) {
-        int[] B = new int[A.length];
+        int[] resultArray = new int[array.length];
         // 假设A中的数据a'有，0<=a' && a' < k并且k=101
         int k = 101;
 
-        int[] C = new int[k];
+        int[] tempArray = new int[k];
         // 计数
-        for (int j = 0; j < A.length; j++) {
-            int a = A[j];
-            C[a] += 1;
+        for (int j = 0; j < array.length; j++) {
+            int a = array[j];
+            tempArray[a] += 1;
         }
         // 求计数和
         for (int i = 1; i < k; i++) {
-            C[i] = C[i] + C[i - 1];
+            tempArray[i] = tempArray[i] + tempArray[i - 1];
         }
         // 整理
-        for (int j = A.length - 1; j >= 0; j--) {
-            int a = A[j];
-            B[C[a] - 1] = a;
-            C[a] -= 1;
+        for (int j = array.length - 1; j >= 0; j--) {
+            int a = array[j];
+            resultArray[tempArray[a] - 1] = a;
+            tempArray[a] -= 1;
         }
-        return B;
+        return resultArray;
     }
 
     //针对c数组的大小，优化过的计数排序
-    public static int[] countSort(int []a){
-        int b[] = new int[a.length];
-        int max = a[0], min = a[0];
-        for(int i : a){
+    static int[] sort1(int[] array){
+        int[] resultArray = new int[array.length];
+        int max = array[0], min = array[0];
+        for(int i : array) {
             if(i > max){
                 max = i;
             }
@@ -68,17 +64,17 @@ class CountingSort {
         }
         //这里k的大小是要排序的数组中，元素大小的极值差+1
         int k = max - min + 1;
-        int c[] = new int[k];
-        for(int i = 0; i < a.length; ++i){
-            c[a[i]-min] += 1;//优化过的地方，减小了数组c的大小
+        int[] tempArray = new int[k];
+        for(int i = 0; i < array.length; ++i) {
+            tempArray[array[i]-min] += 1;//优化过的地方，减小了数组c的大小
         }
-        for(int i = 1; i < c.length; ++i){
-            c[i] = c[i] + c[i-1];
+        for(int i = 1; i < tempArray.length; ++i) {
+            tempArray[i] = tempArray[i] + tempArray[i-1];
         }
-        for(int i = a.length-1; i >= 0; --i){
-            b[--c[a[i]-min]] = a[i];//按存取的方式取出c的元素
+        for(int i = array.length-1; i >= 0; --i) {
+            resultArray[--tempArray[array[i]-min]] = array[i];//按存取的方式取出c的元素
         }
-        return b;
+        return resultArray;
     }
 
 }

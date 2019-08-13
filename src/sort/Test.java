@@ -4,7 +4,7 @@ public class Test {
     private static final String TITEL_FORMAT = "\n%-10s %-15s";
     private static final String SPACE_FORMAT = " %d";
 
-    static void formatPrint(String sort, String time, int[] array) {
+    private static void formatPrint(String sort, String time, int[] array) {
         System.out.format(TITEL_FORMAT, sort, time);
         for (int i : array) {
             System.out.format(SPACE_FORMAT, i);
@@ -60,7 +60,7 @@ public class Test {
 
         long s9 = System.nanoTime();
         int[] array9 = array.clone();
-        RadixSort.sort(array9);
+        RadixSort.sort(array9, 3);
         formatPrint("基数排序", "耗时:" + (System.nanoTime() - s9), array9);
 
         long s10 = System.nanoTime();

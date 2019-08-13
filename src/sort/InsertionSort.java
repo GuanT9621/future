@@ -27,21 +27,19 @@ package sort;
  */
 class InsertionSort {
 
-    static int[] sort(int[] array) {
-        sort1(array);
-        return array;
-    }
+    static void sort(int[] array) {
 
-    static void sort1(int[] array) {
         for (int i = 1; i < array.length; i++) {
             int key = array[i];
             int j = i - 1;
+            // 将上一个复制到下一个 直到遇到可以插入的点
             while (j >= 0 && array[j] > key) {
                 array[j + 1] = array[j];
                 j--;
             }
             array[j + 1] = key;
         }
+
     }
 
 }

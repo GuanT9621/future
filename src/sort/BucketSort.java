@@ -31,12 +31,7 @@ import java.util.List;
  */
 class BucketSort {
 
-    static int[] sort(int[] array) {
-        sort1(array);
-        return array;
-    }
-
-    static void sort1(int[] array) {
+    static void sort(int[] array) {
         int max = array[0], min = array[0];
         for (int a : array) {
             if (max < a)

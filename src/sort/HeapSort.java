@@ -19,9 +19,9 @@ package sort;
  *  稳定性 不稳定
  */
 public class HeapSort {
-    private int[] arr;
-    public HeapSort(int[] arr) {
-        this.arr = arr;
+    private int[] array;
+    public HeapSort(int[] array) {
+        this.array = array;
     }
 
     /**
@@ -34,8 +34,8 @@ public class HeapSort {
          *  从第一个非叶子节点开始即可。无需从最后一个叶子节点开始。
          *  叶子节点可以看作已符合堆要求的节点，根节点就是它自己且自己以下值为最大。
          */
-        int len = arr.length - 1;
-        int beginIndex = (arr.length >> 1)- 1;
+        int len = array.length - 1;
+        int beginIndex = (array.length >> 1)- 1;
         for (int i = beginIndex; i >= 0; i--)
             maxHeapify(i, len);
         /*
@@ -51,9 +51,9 @@ public class HeapSort {
     }
 
     private void swap(int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 
     /**
@@ -67,9 +67,10 @@ public class HeapSort {
         int ri = li + 1;           // 右子节点索引
         int cMax = li;             // 子节点值最大索引，默认左子节点。
         if (li > len) return;      // 左子节点索引超出计算范围，直接返回。
-        if (ri <= len && arr[ri] > arr[li]) // 先判断左右子节点，哪个较大。
+        if (ri <= len && array[ri] > array[li]) { // 先判断左右子节点，哪个较大。
             cMax = ri;
-        if (arr[cMax] > arr[index]) {
+        }
+        if (array[cMax] > array[index]) {
             swap(cMax, index);      // 如果父节点被子节点调换，
             maxHeapify(cMax, len);  // 则需要继续判断换下后的父节点是否符合堆的特性。
         }

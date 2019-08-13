@@ -30,15 +30,10 @@ package sort;
  */
 class QuickSort {
 
-    static int[] sort(int[] array, int head, int tail) {
-        quickSort2(array, head, tail);
-        return array;
-    }
-
     /**
      * wiki 最优算法 简化版的指针交换法
      */
-    static void sort1(int[] array, int head, int tail) {
+    static void sort(int[] array, int head, int tail) {
         if (head >= tail || array == null || array.length <= 1) {
             return;
         }
@@ -61,8 +56,8 @@ class QuickSort {
                 ++i;
             }
         }
-        sort1(array, head, j);
-        sort1(array, i, tail);
+        sort(array, head, j);
+        sort(array, i, tail);
     }
 
 

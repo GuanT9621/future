@@ -31,12 +31,7 @@ package sort;
  */
 class SelectionSort {
 
-    static int[] sort(int[] array) {
-        sort1(array);
-        return array;
-    }
-
-    static void sort1(int[] array) {
+    static void sort(int[] array) {
         for (int i = 0; i < array.length - 1; i++) {
             int min = i;
             for (int j = i+1; j < array.length; j++) {

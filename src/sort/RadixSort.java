@@ -26,35 +26,32 @@ package sort;
  *
  *  https://zh.wikipedia.org/wiki/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F
  */
-public class RadixSort {
+class RadixSort {
 
-    static int[] sort(int[] array) {
-        sort1(array, 3);
-        return array;
-    }
-
-    static void sort1(int[] array, int d) {//d表示最大的数有多少位
+    /**
+     * 计数排序
+     * @param array 原数组
+     * @param d 最大的数有多少位
+     */
+    static void sort(int[] array, int d) {//d表示最大的数有多少位
         int k = 0;
         int n = 1;
         int m = 1; //控制键值排序依据在哪一位
         int[][]temp = new int[10][array.length]; //数组的第一维表示可能的余数0-9
         int[]order = new int[10]; //数组orderp[i]用来表示该位是i的数的个数
-        while(m <= d)
-        {
-            for(int i = 0; i < array.length; i++)
-            {
+        while(m <= d) {
+            for(int i = 0; i < array.length; i++) {
                 int lsd = ((array[i] / n) % 10);
                 temp[lsd][order[lsd]] = array[i];
                 order[lsd]++;
             }
-            for(int i = 0; i < 10; i++)
-            {
-                if(order[i] != 0)
-                    for(int j = 0; j < order[i]; j++)
-                    {
+            for(int i = 0; i < 10; i++) {
+                if(order[i] != 0) {
+                    for (int j = 0; j < order[i]; j++) {
                         array[k] = temp[i][j];
                         k++;
                     }
+                }
                 order[i] = 0;
             }
             n *= 10;

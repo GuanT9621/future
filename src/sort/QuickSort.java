@@ -5,15 +5,15 @@ package sort;
  * https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F
  *
  * 算法介绍
- * 快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，
- * 则可分别对这两部分记录继续进行排序，以达到整个序列有序。
+ *  快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，
+ *  则可分别对这两部分记录继续进行排序，以达到整个序列有序。
  *
  * 算法描述
  * 快速排序使用分治法来把一个串（list）分为两个子串（sub-lists）。具体算法描述如下：
- * 1 从数列中挑出一个元素，称为 “基准”（pivot）；
- * 2 重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。
- * 在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；
- * 3 递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。
+ *  1 从数列中挑出一个元素，称为 “基准”（pivot）；
+ *  2 重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。
+ *    在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；
+ *  3 递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。
  *
  * 复杂度
  *  时间复杂度（平均）O(n log n)
@@ -38,7 +38,7 @@ class QuickSort {
         if (startIndex >= endIndex || array == null || array.length <= 1) {
             return;
         }
-        int left = startIndex, right = endIndex, pivot = array[(startIndex + endIndex) / 2];
+        int left = startIndex, right = endIndex, pivot = array[startIndex];
         while (left <= right) {
             while (array[left] < pivot) {
                 ++left;
@@ -80,7 +80,6 @@ class QuickSort {
         int left = startIndex, right = endIndex, pivot = array[startIndex];
         // 坑的位置，初始等于pivot的位置
         int index = startIndex;
-        //大循环在左右指针重合或者交错时结束
         while (right >= left) {
             while (right >= left) {
                 if (array[right] < pivot) {
@@ -112,7 +111,7 @@ class QuickSort {
     private static int partition2(int[] array, int startIndex, int endIndex) {
         int left = startIndex, right = endIndex, pivot = array[startIndex];
         while ( left != right) {
-            while (left < right && array[right] > pivot){
+            while (left < right && array[right] > pivot) {
                 right--;
             }
             while (left < right && array[left] <= pivot) {

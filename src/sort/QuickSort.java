@@ -130,5 +130,4 @@ class QuickSort {
         return left;
     }
 
-
 }

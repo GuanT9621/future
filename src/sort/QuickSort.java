@@ -67,7 +67,7 @@ class QuickSort {
         if (startIndex >= endIndex) { // 递归结束条件：startIndex大等于endIndex的时候
             return;
         }
-        int pivotIndex = partition2(array, startIndex, endIndex); // 得到基准元素位置
+        int pivotIndex = partition1(array, startIndex, endIndex); // 得到基准元素位置
         sort(array, startIndex, pivotIndex - 1); // 用分治法递归数列的两部分
         sort(array, pivotIndex + 1, endIndex);
     }
@@ -80,8 +80,8 @@ class QuickSort {
         int left = startIndex, right = endIndex, pivot = array[startIndex];
         // 坑的位置，初始等于pivot的位置
         int index = startIndex;
-        while (right >= left) {
-            while (right >= left) {
+        while (left <= right) {
+            while (left <= right) {
                 if (array[right] < pivot) {
                     array[left] = array[right];
                     index = right;
@@ -90,7 +90,7 @@ class QuickSort {
                 }
                 right--;
             }
-            while (right >= left) {
+            while (left <= right) {
                 if (array[left] > pivot) {
                     array[right] = array[left];
                     index = left;

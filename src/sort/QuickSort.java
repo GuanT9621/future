@@ -120,7 +120,7 @@ class QuickSort {
             }
         }
         //pivot和指针重合点交换
-        swap(array, left, right);
+        swap(array, left, startIndex);
         return left;
     }
 

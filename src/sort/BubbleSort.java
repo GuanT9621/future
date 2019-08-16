@@ -27,18 +27,20 @@ package sort;
 class BubbleSort {
 
     static void sort(int[] array) {
-
         for (int i = 0; i < array.length - 1; i++) { // 循环次数为元素个数
             for (int j = 0; j < array.length - 1 - i; j++) { // 对比次数为未排序的元素个数
                 // 每次只对比当前元素和下一个元素，然后交换。保证了下次对比时取到的当前元素必定是浮上来的那个元素。
                 if (array[j] > array[j + 1]) {
-                    int temp = array[j];
-                    array[j] = array[j + 1];
-                    array[j + 1] = temp;
+                    swap(array, j, j + 1);
                 }
             }
         }
+    }
 
+    private static void swap(int[] array, int left, int right) {
+        int temp = array[left];
+        array[left] = array[right];
+        array[right] = temp;
     }
 
 }

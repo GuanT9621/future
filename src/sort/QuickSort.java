@@ -47,9 +47,7 @@ class QuickSort {
                 --right;
             }
             if (left < right) {
-                int t = array[left];
-                array[left] = array[right];
-                array[right] = t;
+                swap(array, left, right);
                 ++left;
                 --right;
             } else if (left == right) {
@@ -118,16 +116,18 @@ class QuickSort {
                 left++;
             }
             if (left < right) {
-                int t = array[left];
-                array[left] = array[right];
-                array[right] = t;
+                swap(array, left, right);
             }
         }
         //pivot和指针重合点交换
-        int p = array[left];
-        array[left] = array[startIndex];
-        array[startIndex] = p;
+        swap(array, left, right);
         return left;
+    }
+
+    private static void swap(int[] array, int left, int right) {
+        int temp = array[left];
+        array[left] = array[right];
+        array[right] = temp;
     }
 
 }

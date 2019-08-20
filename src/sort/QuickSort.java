@@ -32,7 +32,7 @@ package sort;
 class QuickSort {
 
     /**
-     * wiki 简化版的指针交换法
+     * wiki 上的代码，很差，不建议使用
      */
     static void qSort(int[] array, int startIndex, int endIndex) {
         if (startIndex >= endIndex || array == null || array.length <= 1) {
@@ -59,13 +59,13 @@ class QuickSort {
     }
 
     /**
-     * 挖坑法 & 指针交换法
+     * 挖坑法 & 指针交换法（双边循环法） & mark交换法（单边循环）
      */
     static void sort(int[] array, int startIndex, int endIndex) {
         if (startIndex >= endIndex) { // 递归结束条件：startIndex大等于endIndex的时候
             return;
         }
-        int pivotIndex = partition1(array, startIndex, endIndex); // 得到基准元素位置
+        int pivotIndex = partition3(array, startIndex, endIndex); // 得到基准元素位置
         sort(array, startIndex, pivotIndex - 1); // 用分治法递归数列的两部分
         sort(array, pivotIndex + 1, endIndex);
     }
@@ -103,7 +103,7 @@ class QuickSort {
     }
 
     /**
-     * 指针交换法
+     * 指针交换法（双边循环法）
      * 和挖坑法相比，指针交换法在partition方法中进行的元素交换次数更少。
      */
     private static int partition2(int[] array, int startIndex, int endIndex) {
@@ -122,6 +122,23 @@ class QuickSort {
         //pivot和指针重合点交换
         swap(array, left, startIndex);
         return left;
+    }
+
+    /**
+     *  mark交换法（单边循环）
+     *  和其他法相比，mark交换法代码更简单，逻辑更简单。
+     */
+    private static int partition3(int[] array, int startIndex, int endIndex) {
+        int pivot = array[startIndex];
+        int mark = startIndex;
+        for (int i = startIndex + 1; i <= endIndex; i++) {
+            if (array[i] < pivot) {
+                mark++;
+                swap(array, mark, i);
+            }
+        }
+        swap(array, startIndex, mark);
+        return mark;
     }
 
     private static void swap(int[] array, int left, int right) {

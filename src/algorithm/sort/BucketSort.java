@@ -1,4 +1,4 @@
-package sort;
+package algorithm.sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.List;
  * 桶排序（Bucket Sort）
  * 桶排序是计数排序的升级版。它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。
  *
- * 桶排序 (Bucket sort)的工作的原理：
+ * 桶排序 (Bucket algorithm.sort)的工作的原理：
  * 假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排）。
  *
  * 桶排序是鸽巢排序的一种归纳结果。桶排序并不是比较排序，他不受到 O(n log n) 下限的影响。

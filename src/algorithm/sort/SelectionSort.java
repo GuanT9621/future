@@ -1,7 +1,7 @@
-package sort;
+package algorithm.sort;
 
 /**
- * 选择排序(Selection-sort)
+ * 选择排序(Selection-algorithm.sort)
  *
  * 算法介绍
  * 选择排序是一种简单直观的排序算法。

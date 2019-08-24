@@ -1,4 +1,4 @@
-package sort;
+package algorithm.sort;
 
 /**
  * 希尔排序（Shell Sort）递减增量排序算法

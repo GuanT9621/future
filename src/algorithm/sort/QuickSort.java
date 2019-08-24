@@ -1,7 +1,7 @@
-package sort;
+package algorithm.sort;
 
 /**
- * 快速排序，又称划分交换排序（partition-exchange sort）
+ * 快速排序，又称划分交换排序（partition-exchange algorithm.sort）
  * https://zh.wikipedia.org/wiki/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F
  *
  * 算法介绍

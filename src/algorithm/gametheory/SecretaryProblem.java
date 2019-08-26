@@ -31,11 +31,11 @@ package algorithm.gametheory;
  *    策略9 参考前 9 个人水平，后面取比其大的人，其中能取到最大值的概率为 9/10 * (1/9)
  *
  *  3 最佳策略
- *    放弃 k 个人，选择其后第一个比 k 个人都强的候选人，这样的策略称为“策略 k”。
+ *    放弃 K 个人，选择其后第一个比 K 个人都强的候选人，这样的策略称为“策略 K”。
  *    已知 N = 4 时，最佳策略为策略 1。
  *        N = 5、6、7 时，最佳策略为策略 2。
  *        N = 8、9、10 时，最佳策略是策略 3。
- *        推而广之，可以证明 A 对于 N 个候选人， 策略 k(k > 0) 的成功概率为：
+ *        推而广之，可以证明 A 对于 N 个候选人， 策略 K(K > 0) 的成功概率为：
  *                 K 1    1     1           1
  *        P(N,K) = -(- + --- + --- + ... + ---)
  *                 N k   k+1   k+2         N-1
@@ -59,13 +59,12 @@ public class SecretaryProblem {
     }
 
     public static void main(String[] args) {
-        System.out.println("Sum 0：" + 1/4);
-        System.out.println("Sum 1：" + sumProbability(1, 4));
-        System.out.println("Sum 2：" + sumProbability(2, 4));
-        System.out.println("Sum 3：" + sumProbability(3, 4));
-        System.out.println("Sum 4：" + sumProbability(4, 4));
+        double n = 10;
+        System.out.println("Sum 0：" + 1D/n);
+        for (int i = 1; i < n; i++) {
+            System.out.println(("Sum " + i + " : ") + sumProbability(i, n));
+        }
 
-        int n = 4;
         System.out.println("N = " + n + "时, 策略(N/e) = " + n/2.71828 + ", 概率(1/e) = " + 1/2.71828);
     }
 

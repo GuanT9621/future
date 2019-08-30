@@ -1,4 +1,4 @@
-package thread.locks;
+package thread.aqs;
 
 import java.util.ArrayList;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;

@@ -1,4 +1,4 @@
-package thread;
+package thread.countdownlatch;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -20,7 +20,7 @@ public class CountDownLatchDemo1 {
 
     public static void main(String[] args) throws InterruptedException {
         new CountDownLatchDemo1();
-//        driver.main();
+        driver.main();
         driver2.main();
     }
 

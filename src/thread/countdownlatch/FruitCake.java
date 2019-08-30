@@ -1,7 +1,6 @@
-package thread.latch;
+package thread.countdownlatch;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
 public class FruitCake implements Runnable {

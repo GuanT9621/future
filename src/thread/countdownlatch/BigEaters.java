@@ -1,8 +1,7 @@
-package thread.latch;
+package thread.countdownlatch;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,8 +35,18 @@ public class BigEaters implements Runnable {
     }
 
     /**
-     * 生产者与消费者模式
-     * 多个生产者之间相互协调
+     *
+     * 模拟了三条有依赖关系的流水线，先生产面包，再抹上黄油，再抹上水果，最后将做好的蛋糕给食客。
+     *
+     *
+     *       CountDownLatch
+     *
+     *       减计数方式
+     *       计算为0时释放所有等待的线程
+     *       计数为0时，无法重置
+     *       调用countDown()方法计数减一，调用await()方法只进行阻塞，对计数没任何影响
+     *       不可重复利用
+     *
      */
     public static void main(String[] args) {
         CountDownLatch countDownLatch = new CountDownLatch(3);
@@ -45,6 +54,7 @@ public class BigEaters implements Runnable {
         int prepareNum = 10;
         final Object bridge1 = new Object();
         final Object bridge2 = new Object();
+
         ExecutorService executorService = Executors.newFixedThreadPool(4);
         executorService.execute(new BigEaters(cakesList, countDownLatch));
         executorService.execute(new BreadCake(cakesList, countDownLatch, prepareNum, bridge1));

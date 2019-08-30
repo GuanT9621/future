@@ -1,4 +1,4 @@
-package algorithm.gametheory;
+package data.structure.maps;
 
 import java.util.HashMap;
 

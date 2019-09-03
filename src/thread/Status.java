@@ -6,9 +6,9 @@ package thread;
  * BLOCKED: 阻塞状态，等待锁的释放
  *          比如线程A进入了一个synchronized方法，线程B也想进入这个方法，但是这个方法的锁已经被线程A获取了，这个时候线程B就处于BLOCKED状态
  * WAITING: 等待状态，处于等待状态的线程是由于执行了3个方法中的任意方法。
-     *          1. Object的wait方法，并且没有使用timeout参数;
- *              2. Thread的join方法，没有使用timeout参数
- *              3. LockSupport的park方法。
+ *          1. Object的wait方法，并且没有使用timeout参数;
+ *          2. Thread的join方法，没有使用timeout参数
+ *          3. LockSupport的park方法。
  *          处于waiting状态的线程会等待另外一个线程处理特殊的行为。
  *          再举个例子，如果一个线程调用了一个对象的wait方法，那么这个线程就会处于waiting状态直到另外一个线程调用这个对象的notify或者notifyAll方法后才会解除这个状态
  * TIMED_WAITING: 有等待时间的等待状态

@@ -1,6 +1,5 @@
 package serialize;
 
-import java.io.Externalizable;
 import java.io.Serializable;
 
 public class SerializableTest implements Serializable {

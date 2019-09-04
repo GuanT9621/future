@@ -3,6 +3,7 @@ package jvm.dispatch;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.reflect.Field;
 
 /**
  * "Human" 称为变量的静态类型（Static Type），或者叫做外观类型（Apparent Type），
@@ -40,11 +41,35 @@ public class InvokeTest {
 	class Son extends Father {
 		void thinking() {
 			final String methodName = "thinking";
-
-			MethodType methodType = MethodType.methodType(void.class);
-			MethodHandles.Lookup lookup = MethodHandles.lookup();
 			try {
+				MethodType methodType = MethodType.methodType(void.class);
+
+				MethodHandles.Lookup lookup = MethodHandles.lookup();
 				MethodHandle methodHandle = lookup.findSpecial(GrandFather.class, methodName, methodType, Son.class);
+
+				methodHandle.invoke(this);
+			} catch (Throwable e) { }
+		}
+
+		/**
+		 * MPL_LOOKUP 是用来判断私有方法是否被信任的标识，用来控制访问权限的.默认是false,
+		 * 默认情况下findSpecial方法中的最后一个参数Class<?> specialCaller 有一个校验 checkSpecialCaller,
+		 * 如果当前的lookup的类和specialCaller不一致的话就会检测不通过,
+		 * 		IMPL_LOOKUP.setAccessible(true);
+		 * 		设置为true之后，(MethodHandles.Lookup) IMPL_LOOKUP.get(null)这是获取一个Lookup，
+		 * 		这种方式返回的allowedModes为-1 这样的话就可以绕过检查，从而执行执行传入specialCaller类中的方法，
+		 * 		当然也有风险，舍弃了强校验，很容易抛出NoSuchMethodError.
+		 * */
+		void thinking0() {
+			final String methodName = "thinking";
+			try {
+				MethodType methodType = MethodType.methodType(void.class);
+
+				Field IMPL_LOOKUP = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
+				IMPL_LOOKUP.setAccessible(true);
+				MethodHandles.Lookup lookup = (MethodHandles.Lookup) IMPL_LOOKUP.get(null);
+				MethodHandle methodHandle = lookup.findSpecial(GrandFather.class, methodName, methodType, GrandFather.class);
+
 				methodHandle.invoke(this);
 			} catch (Throwable e) { }
 		}
@@ -72,7 +97,6 @@ public class InvokeTest {
 	 *
 	 */
 	public static void main(String[] args) {
-		// 预期：实现调用祖父类的 thinking() 方法，打印 "i am grandfather"
 		(new InvokeTest().new Son()).thinking();
 	}
 }

@@ -49,6 +49,7 @@ public class StringTest {
 
         System.out.println("a1 == a2 " + (a1 == a2));
         System.out.println("a2 == a3 " + (a2 == a3));
+        System.out.println("a2 == b2 " + (a2 == b2));
         System.out.println("a1 == GH " + (a1 == "GH"));
 
         System.out.println("a1 == b4 " + (a4 == b4));

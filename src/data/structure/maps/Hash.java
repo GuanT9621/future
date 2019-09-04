@@ -1,6 +1,7 @@
 package data.structure.maps;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * 解决哈希冲突的方案
@@ -33,16 +34,46 @@ import java.util.HashMap;
  * 4 建立公共溢出区
  *      基本思想: 将哈希表分为基本表和溢出表两部分，凡是和基本表发生冲突的元素，一律填入溢出表。
  *
+ * hash容易碰撞怎么解决
+ *      同时使用多个hash算法，计算出不同的hashcode，组合成为一个唯一标识。
+ *
  */
 public class Hash {
+
+    int hash;
+    /**
+     * 不同类型的Hash算法
+     */
+    public Hash() {
+        // boolean类型
+        boolean b = true;
+        hash = b ? 0 : 1;
+
+        // byte、char、short、int类型
+        int i = 9;
+        hash = (int) i;
+
+        // long类型
+        long j = 123L;
+        hash = (int) (j ^ (j >>> 32));
+
+        // double类型
+        double d = 53.22D;
+        long temp = Double.doubleToLongBits(d);
+        hash = (int) (temp ^ (temp >>> 32));
+    }
+
+    /**
+     * 按照下面的公式，把上面得到的hash组合到result中：
+     */
+    public void hashcode() {
+        int result = 5;
+        result = 37 * result + hash;
+    }
 
     public static void main(String[] args) {
         HashMap hashMap = new HashMap();
         ThreadLocal tl = new ThreadLocal();
-
-        long a = 123;
-        int b = (int) (a ^ (a >>> 32));
-        System.out.println(b);
     }
 
 }

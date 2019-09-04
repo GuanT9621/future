@@ -40,6 +40,9 @@ public class Hash {
         HashMap hashMap = new HashMap();
         ThreadLocal tl = new ThreadLocal();
 
+        long a = 123;
+        int b = (int) (a ^ (a >>> 32));
+        System.out.println(b);
     }
 
 }

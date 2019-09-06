@@ -45,7 +45,6 @@ public class LockSupportTest {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
             b.start();

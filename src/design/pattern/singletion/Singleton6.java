@@ -29,7 +29,14 @@ public class Singleton6 {
         /**
          * EnumSingle.INSTANCE 触发 构造函数EnumSingle()
          */
+//        EnumSingle.INSTANCE.getInstance();
+//        System.out.println("once");
         return EnumSingle.INSTANCE.getInstance();
+    }
+
+    public static void main(String[] args) {
+//        getInstance();
+        getInstance();
     }
 
 }

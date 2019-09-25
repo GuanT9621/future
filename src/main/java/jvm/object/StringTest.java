@@ -62,6 +62,18 @@ public class StringTest {
         System.out.println("c1 == a2 " + (c1 == a2));
         System.out.println("c1 == b2 " + (c1 == b2));
 
+        Object obj = 25D;
+        // 调用toString为调用对象的toString方法，对象为null时会抛出NPE，结果取决于对象toString实现
+        String s1 = obj.toString();
+        System.out.println("s1 " + s1);
+
+        // 强转只能适用于子类转父类，否则抛出ClassCastException
+        String s2 = (String) obj;
+        System.out.println("s2 " + s2);
+
+        // return (obj == null) ? "null" : obj.toString();
+        String s3 = String.valueOf(obj);
+        System.out.println("s3 " + s3);
     }
 
 }

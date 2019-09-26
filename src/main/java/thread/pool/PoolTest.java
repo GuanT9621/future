@@ -30,14 +30,22 @@ public class PoolTest {
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) { }
     };
 
+    /** 线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，
+     * 这样的处理方式让人更加明确线程池的运行规则，规避资源耗尽的风险。*/
     ThreadPoolExecutor tpe = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit,
             workQueue,
             threadFactory,
             handler);
 
+    /** 用户fork join 工作窃取 */
+    ExecutorService wsp = Executors.newWorkStealingPool(5);
 
-    public static void main(String[] args) {
-        String a = "script_version=1.2";
-        System.out.println(a.split("=")[1]);
-    }
+    /** 允许的请求队列长度为 Integer.MAX_VALUE，可能会堆积大量的请求，从而导致 OOM。 */
+    ExecutorService ftp = Executors.newFixedThreadPool(5);
+    ExecutorService stp = Executors.newSingleThreadExecutor();
+
+    /** 允许的创建线程数量为 Integer.MAX_VALUE，可能会创建大量的线程，从而导致 OOM。 */
+    ExecutorService ctp = Executors.newCachedThreadPool();
+    ExecutorService sctp = Executors.newScheduledThreadPool(5);
+
 }

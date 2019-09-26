@@ -35,4 +35,9 @@ public class PoolTest {
             threadFactory,
             handler);
 
+
+    public static void main(String[] args) {
+        String a = "script_version=1.2";
+        System.out.println(a.split("=")[1]);
+    }
 }

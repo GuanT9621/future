@@ -18,7 +18,7 @@ public class PoolTest {
     /** 阻塞队列（同步队列）：用于在任务执行前保存任务的队列。这个队列只包含{execute}方法提交的{Runnable}任务。*/
     BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<>(100);
 
-    /** 线程工厂 ： 执行程序创建新线程时使用的工厂*/
+    /** 线程工厂 ： 执行程序创建新线程时使用的工厂 */
     ThreadFactory threadFactory = new ThreadFactory() {
         @Override
         public Thread newThread(Runnable r) { return null; }

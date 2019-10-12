@@ -8,22 +8,24 @@ public class TransferBlocked {
 
     static Integer l = 2;
 
+    /** thread a 持有锁，b 等待锁释放时，thread b 处于 BLOCKED 状态
+     */
     public static void main(String[] args) throws InterruptedException {
         Thread a = new Thread(() -> {
             synchronized (l) {
                 try {
-                    System.out.println("a get lock");
+                    System.out.println("a get lock\n");
                     Thread.sleep(5 * 1000);
-                    System.out.println("a put lock");
+                    System.out.println("a put lock\n");
                 } catch (InterruptedException e) { e.printStackTrace(); }
             }
         });
         Thread b = new Thread(() -> {
             synchronized (l) {
                 try {
-                    System.out.println("b get lock");
+                    System.out.println("b get lock\n");
                     Thread.sleep(5 * 1000);
-                    System.out.println("b put lock");
+                    System.out.println("b put lock\n");
                 } catch (InterruptedException e) { e.printStackTrace(); }
             }
         });
@@ -33,6 +35,7 @@ public class TransferBlocked {
         for (int i=0; i<12; i++) {
             System.out.println("a.state " + a.getState());
             System.out.println("b.state " + b.getState());
+            System.out.println();
             Thread.sleep(1000);
         }
 

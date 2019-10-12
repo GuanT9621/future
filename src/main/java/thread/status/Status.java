@@ -1,4 +1,4 @@
-package thread;
+package thread.status;
 
 /**
  * NEW: 线程创建之后，但是还没有启动(not yet started)。这时候它的状态就是NEW
@@ -35,7 +35,7 @@ public class Status {
         // thread.join(); // nothing
 
         thread.start();
-//        thread.start(); // java.lang.IllegalThreadStateException
+//        thread.start(); // 再次start会抛出异常，即使join后也会，因为状态已经变为TERMINATED。java.lang.IllegalThreadStateException
         System.out.println(thread.getState());
 
         thread.interrupt();

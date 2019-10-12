@@ -12,6 +12,8 @@ package thread.status;
  *          1. Object的wait
  *          2. Thread的join
  *          3. LockSupport 的 park。
+ *          4. lock 的 lock()，在未获取到锁时等待
+ *          5. FutureTask 的 get() 在未获取到返回时
  *
  *          处于waiting状态的线程会等待另外一个线程处理特殊的行为。
  *          再举个例子，如果一个线程调用了一个对象的wait方法，那么这个线程就会处于waiting状态直到另外一个线程调用这个对象的notify或者notifyAll方法后才会解除这个状态
@@ -23,6 +25,8 @@ package thread.status;
  *              3. Thread.join，带有时间
  *              4. LockSupport 的 parkNanos，带有时间
  *              5. LockSupport 的 parkUntil，带有时间
+ *              6. lock 的 tryLock() 带有时间
+ *              7. FutureTask 的 get() 带有时间
  *
  * TERMINATED: 线程中止的状态，这个线程已经完整地执行了它的任务
  */
@@ -35,7 +39,10 @@ public class Status {
         // thread.join(); // nothing
 
         thread.start();
-//        thread.start(); // 再次start会抛出异常，即使join后也会，因为状态已经变为TERMINATED。java.lang.IllegalThreadStateException
+
+        // 再次start会抛出异常，因为状态已经变为 非NEW。进入 start() 源码会发现“任何非NEW的状态下调用 start 都会抛出异常”
+        // thread.start(); // java.lang.IllegalThreadStateException
+
         System.out.println(thread.getState());
 
         thread.interrupt();

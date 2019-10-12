@@ -1,5 +1,6 @@
 package thread.status;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.locks.LockSupport;
 /**
  * WAITING: 等待状态，处于等待状态的线程是由于执行了3个方法中的任意方法。
@@ -22,7 +23,7 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class TransferWait {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main1(String[] args) throws InterruptedException {
         Integer l = 2;
 
         // 用来给 a 测试 join 时的状态
@@ -93,4 +94,5 @@ public class TransferWait {
         a.join();
         System.out.println("\n a.join " + a.getState() + "\n");
     }
+
 }

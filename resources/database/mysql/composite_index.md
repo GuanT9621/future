@@ -1,8 +1,8 @@
-复合索引 最左匹配原则  
+## 复合索引 最左匹配原则  
 如果有一个2列的索引(col1,col2), 则已经对(col1)、(col1,col2)上建立了索引；  
 如果有一个3列索引(col1,col2,col3)，则已经对(col1)、(col1,col2)、(col1,col2,col3)上建立了索引；  
 
-组合索引(a,b)
+## 组合索引(a,b)
 
 explain select * from test where a=1 and b=1;
 explain select * from test where b=1 and a=1;

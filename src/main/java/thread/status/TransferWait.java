@@ -23,6 +23,9 @@ import java.util.concurrent.locks.LockSupport;
  *          6. lock 的 tryLock() 带有时间
  *          7. FutureTask 的 get() 带有时间
  *
+ * 以上可以发现，Thread Status 受到当前线程内运行的代码的状态的影响。
+ *          所以并不局限于以上，其他的方法也可能导致当前线程状态改变，如 CountDownLatch CyclicBarrier Exchanger Semaphore 等等。
+ *
  */
 public class TransferWait {
 

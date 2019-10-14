@@ -8,18 +8,21 @@ import java.util.concurrent.locks.LockSupport;
  *          2. Thread的join
  *          3. LockSupport 的 park。
  *          4. lock 的 lock()，在未获取到锁时等待
+ *          5. FutureTask 的 get()，在未获取到执行结果时
  *
  *          处于waiting状态的线程会等待另外一个线程处理特殊的行为。
  *          再举个例子，如果一个线程调用了一个对象的wait方法，那么这个线程就会处于waiting状态直到另外一个线程调用这个对象的notify或者notifyAll方法后才会解除这个状态
  *
  * TIMED_WAITING: 有等待时间的等待状态
- *              比如调用了以下几个方法中的任意方法，并且指定了等待时间，线程就会处于这个状态。
- *              1. Thread.sleep
- *              2. Object 的 wait，带有时间
- *              3. Thread.join，带有时间
- *              4. LockSupport 的 parkNanos，带有时间
- *              5. LockSupport 的 parkUntil，带有时间
- *              6. lock 的 tryLock() 带有时间
+ *          比如调用了以下几个方法中的任意方法，并且指定了等待时间，线程就会处于这个状态。
+ *          1. Thread.sleep
+ *          2. Object 的 wait，带有时间
+ *          3. Thread.join，带有时间
+ *          4. LockSupport 的 parkNanos，带有时间
+ *          5. LockSupport 的 parkUntil，带有时间
+ *          6. lock 的 tryLock() 带有时间
+ *          7. FutureTask 的 get() 带有时间
+ *
  */
 public class TransferWait {
 

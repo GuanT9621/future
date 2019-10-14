@@ -23,7 +23,7 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class TransferWait {
 
-    public static void main1(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         Integer l = 2;
 
         // 用来给 a 测试 join 时的状态

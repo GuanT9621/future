@@ -34,19 +34,19 @@ public class IP2Integer {
         return (ip1 << 24) | (ip2 << 16) | (ip3 << 8) | (ip4);
     }
 
+    /**
+     * 将 int 转换为 ip 是上面过程的逆过程
+     * int右移24位： 11000000 与 255（0xff）做'与'运算
+     * int右移16位： 10101000 与 255（0xff）做'与'运算
+     * int右移08位： 00000001 与 255（0xff）做'与'运算
+     * int右移00位： 00000011 与 255（0xff）做'与'运算
+     */
     public static String int2Ip(int ip) {
         StringBuilder sb = new StringBuilder();
-        int num = 0;
-        boolean needPoint = false;
-        for (int i = 0; i < 4; i++) {
-            if (needPoint) {
-                sb.append('.');
-            }
-            needPoint = true;
-            int offset = 8 * (3 - i);
-            num = (ip >> offset) & 0xff;
-            sb.append(num);
-        }
+        sb.append((ip >> 24) & 255).append(".");
+        sb.append((ip >> 16) & 255).append(".");
+        sb.append((ip >> 8) & 255).append(".");
+        sb.append(ip & 255);
         return sb.toString();
     }
 

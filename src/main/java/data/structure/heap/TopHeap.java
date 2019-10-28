@@ -47,8 +47,8 @@ public class TopHeap {
     public static void reHeap(int[] array, int endIndex) {
         // 最后一个非叶子节点的位置
         int lastNonLeafIndex;
-        // 左奇数，右偶数 // 下面过程可以简化为 lastNonLeafIndex = (endIndex - 2 + (endIndex / 2)) / 2;
-        if (endIndex / 2 == 0) {
+        // 左奇数，右偶数 // 下面过程可以简化为 lastNonLeafIndex = (endIndex - 2 + (endIndex % 2)) / 2;
+        if (endIndex % 2 == 0) {
             lastNonLeafIndex = (endIndex - 2) / 2;
         } else {
             lastNonLeafIndex = (endIndex - 1) / 2;

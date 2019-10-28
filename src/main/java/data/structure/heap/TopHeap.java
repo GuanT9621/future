@@ -1,7 +1,5 @@
 package data.structure.heap;
 
-import java.lang.reflect.Array;
-
 /**
  * 最大堆(本例) / 最小堆
  * 最大堆：根结点的键值是所有堆结点键值中最大者的堆。
@@ -47,9 +45,9 @@ public class TopHeap {
      * 3 提取出 "父节点比较左子/右子节点并交换" 作为独立方法，递归调用，即可实现"完全最大堆"
      */
     public static void reHeap(int[] array, int endIndex) {
-        //最后一个非叶子节点的位置
+        // 最后一个非叶子节点的位置
         int lastNonLeafIndex;
-        // 左奇数，右偶数
+        // 左奇数，右偶数 // 下面过程可以简化为 lastNonLeafIndex = (endIndex - 2 + (endIndex / 2)) / 2;
         if (endIndex / 2 == 0) {
             lastNonLeafIndex = (endIndex - 2) / 2;
         } else {

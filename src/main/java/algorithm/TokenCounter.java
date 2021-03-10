@@ -2,6 +2,9 @@ package algorithm;
 
 import java.util.*;
 
+/**
+ * top-k-frequent-elements
+ */
 public class TokenCounter {
 
     public static Iterable<String> top(Iterable<String> input, int n) {

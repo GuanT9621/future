@@ -21,7 +21,11 @@ public class PoolTest {
     /** 线程工厂 ： 执行程序创建新线程时使用的工厂 */
     ThreadFactory threadFactory = new ThreadFactory() {
         @Override
-        public Thread newThread(Runnable r) { return null; }
+        public Thread newThread(Runnable r) {
+            Thread thread = new Thread();
+            thread.setName("thread_save_info");
+            return thread;
+        }
     };
 
     /** 无法加入的线程的处理者 ： 由于达到线程边界和队列容量而阻塞执行时使用的处理程 */
@@ -32,7 +36,8 @@ public class PoolTest {
 
     /** 线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，
      * 这样的处理方式让人更加明确线程池的运行规则，规避资源耗尽的风险。*/
-    ThreadPoolExecutor tpe = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit,
+    ThreadPoolExecutor tpe = new ThreadPoolExecutor(corePoolSize, maximumPoolSize,
+            keepAliveTime, unit,
             workQueue,
             threadFactory,
             handler);

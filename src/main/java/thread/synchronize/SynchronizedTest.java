@@ -1,10 +1,11 @@
 package thread.synchronize;
 
 /**
+ *
  * synchronized实现同步的基础： Java中的每一个对象都可以作为锁！
- *      普通方法  锁当前实例
+ *      普通方法  锁当前实例 this
  *      静态方法  锁类的Class对象
- *      方法快    锁synchronized(monitor)括号内的对象
+ *      方法块    锁synchronized(monitor)括号内的对象
  *
  * 每一个对象都可以作为锁： 锁信息存在Java对象头里。
  *       数组对象    对象头3个字宽 （64位JVM里 1字宽=8字节 即64bit）

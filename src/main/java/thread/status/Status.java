@@ -16,7 +16,7 @@ package thread.status;
  *          5. FutureTask 的 get() 在未获取到返回时
  *
  *          处于waiting状态的线程会等待另外一个线程处理特殊的行为。
- *          再举个例子，如果一个线程调用了一个对象的wait方法，那么这个线程就会处于waiting状态直到另外一个线程调用这个对象的notify或者notifyAll方法后才会解除这个状态
+ *          举例，如果一个线程调用了一个对象的wait方法，那么这个线程就会处于waiting状态直到另外一个线程调用这个对象的notify或者notifyAll方法后才会解除这个状态
  *
  * TIMED_WAITING: 有等待时间的等待状态
  *              比如调用了以下几个方法中的任意方法，并且指定了等待时间，线程就会处于这个状态。

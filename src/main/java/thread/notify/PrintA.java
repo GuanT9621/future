@@ -18,13 +18,14 @@ public class PrintA implements Runnable {
                 return;
             }
 
+            System.out.println("A");
+
             /**
              * 在调用 notify 前必须拥有对象的锁，否则会抛出 java.lang.IllegalMonitorStateException
              */
             synchronized (lockB) {
                 lockB.notifyAll();
             }
-
             /**
              * 在调用 wait 前必须拥有对象的锁，否则会抛出 java.lang.IllegalMonitorStateException
              */
@@ -36,8 +37,6 @@ public class PrintA implements Runnable {
                     return;
                 }
             }
-
-            System.out.println("A");
         }
     }
 

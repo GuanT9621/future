@@ -58,6 +58,11 @@ class QuickSort {
         qSort(array, left, endIndex);
     }
 
+    public static void main(String[] args) {
+        int[] array = {4,7,3,5,6,2,8,1};
+        sort(array, 0, array.length-1);
+    }
+
     /**
      * 挖坑法 & 指针交换法（双边循环法） & mark交换法（单边循环）
      */
@@ -127,6 +132,7 @@ class QuickSort {
     /**
      *  mark交换法（单边循环）
      *  和其他法相比，mark交换法代码更简单，逻辑更简单。
+     *  mark 是用来标记比基准大的元素，然后和比基准小的元素交换的。
      */
     private static int partition3(int[] array, int startIndex, int endIndex) {
         int pivot = array[startIndex];

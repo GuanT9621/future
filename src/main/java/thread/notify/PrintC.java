@@ -18,6 +18,8 @@ public class PrintC implements Runnable {
                 return;
             }
 
+            System.out.println("C");
+
             synchronized (lockA) {
                 lockA.notifyAll();
             }
@@ -30,8 +32,6 @@ public class PrintC implements Runnable {
                     return;
                 }
             }
-
-            System.out.println("C");
         }
     }
 }

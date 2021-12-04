@@ -132,7 +132,7 @@ class QuickSort {
     /**
      *  mark交换法（单边循环）
      *  和其他法相比，mark交换法代码更简单，逻辑更简单。
-     *  mark 是用来标记比基准大的元素，然后和比基准小的元素交换的。
+     *  mark 指针代表小于基准元素的区域边界。
      */
     private static int partition3(int[] array, int startIndex, int endIndex) {
         int pivot = array[startIndex];

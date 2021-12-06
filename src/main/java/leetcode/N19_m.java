@@ -7,7 +7,7 @@ package leetcode;
  * 思路：一般我们会反转，然后删除，在反转。这样效率太低。
  * 好的思路，应该有两个指针，比如删除倒数 n 个，那么指针为 1 和 n 。这样就像一个卡尺，找到了当end指针到了尾巴，那么start指针就是要删除的那个
  */
-public class N19 {
+public class N19_m {
     public static class ListNode {
         int val;
         ListNode next;

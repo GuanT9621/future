@@ -28,7 +28,7 @@ import java.util.Map;
  * 727. 最小窗口子序列
  *
  */
-public class N3 {
+public class N3_m {
 
     public static int lengthOfLongestSubstring(String s) {
         if (s.length() == 0) return 0;
@@ -42,7 +42,6 @@ public class N3 {
             map.put(s.charAt(i), i);
             max = Math.max(max, i+1 - left);
         }
-        System.out.println(left);
         return max;
     }
 

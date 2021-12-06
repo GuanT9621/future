@@ -9,7 +9,7 @@ package leetcode;
  * 若向内 移动长板 ，水槽的短板 min(h[i], h[j])min(h[i],h[j])​ 不变或变小，因此下个水槽的面积 一定变小 。
  * 因此，初始化双指针分列水槽左右两端，循环每轮将短板向内移动一格，并更新面积最大值，直到两指针相遇时跳出；即可获得最大面积
  */
-public class N11 {
+public class N11_m {
 
     public static int maxArea(int[] height) {
         if (height.length == 0) return 0;

@@ -36,7 +36,8 @@ public class PoolTest {
 
     /** 线程池不允许使用 Executors 去创建，而是通过 ThreadPoolExecutor 的方式，
      * 这样的处理方式让人更加明确线程池的运行规则，规避资源耗尽的风险。*/
-    ThreadPoolExecutor tpe = new ThreadPoolExecutor(corePoolSize, maximumPoolSize,
+    ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+            corePoolSize, maximumPoolSize,
             keepAliveTime, unit,
             workQueue,
             threadFactory,
@@ -53,4 +54,14 @@ public class PoolTest {
     ExecutorService ctp = Executors.newCachedThreadPool();
     ExecutorService sctp = Executors.newScheduledThreadPool(5);
 
+    /** 展示下怎么并发提交任务，然后获取结果。 */
+    public void testUse(String[] args) throws ExecutionException, InterruptedException {
+        Future<Integer> submit = threadPoolExecutor.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return 1;
+            }
+        });
+        Integer integer = submit.get();
+    }
 }

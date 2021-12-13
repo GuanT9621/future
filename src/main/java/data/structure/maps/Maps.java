@@ -1,6 +1,7 @@
 package data.structure.maps;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -19,6 +20,11 @@ public class Maps {
      */
     Map<String, String> map = new HashMap<>();
 
+    /**
+     * HashMap和双向链表合二为一即是LinkedHashMap
+     * 它是一个将所有Entry节点链入一个双向链表的HashMap
+     */
+    Map<String, String> map1 = new LinkedHashMap<>();
 
     /**
      * 1.7 分段锁的设计，只有在同一个分段内才存在竞态关系，不同的分段锁之间没有锁竞争.ConcurrentHashMap是弱一致性的

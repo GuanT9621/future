@@ -13,9 +13,7 @@ import java.util.Map;
  * void put(int key, int value)如果关键字已经存在，则变更其数据值；如果关键字不存在，则插入该组「关键字-值」。
  * 当缓存容量达到上限时，它应该在写入新数据之前删除最久未使用的数据值，从而为新的数据值留出空间。
  *
- *
  * 进阶：你是否可以在O(1) 时间复杂度内完成这两种操作？
- *
  */
 public class N146_m {
     class LinkedNode {

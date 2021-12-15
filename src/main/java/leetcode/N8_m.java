@@ -40,18 +40,17 @@ public class N8_m {
     }
 
     class Automaton {
-        public int sign = 1; // +1 or -1
+        public int sign = 1; // 符号 +1 or -1
         public long ans = 0; // 无符号结果
-        private String state = "start";
-        private final Map<String, String[]> table = new HashMap<String, String[]>() {
-            private static final long serialVersionUID = 7269379372922971433L;
-            {
-                put("start",      new String[]{"start", "signed", "in_number", "end"});
-                put("signed",     new String[]{"end",   "end",    "in_number", "end"});
-                put("in_number",  new String[]{"end",   "end",    "in_number", "end"});
-                put("end",        new String[]{"end",   "end",    "end",       "end"});
-            }
-        };
+        private String state = "start"; // 当前状态
+        private final Map<String, String[]> table = new HashMap<>();
+
+        public Automaton() {
+            table.put("start",      new String[]{"start", "signed", "in_number", "end"});
+            table.put("signed",     new String[]{"end",   "end",    "in_number", "end"});
+            table.put("in_number",  new String[]{"end",   "end",    "in_number", "end"});
+            table.put("end",        new String[]{"end",   "end",    "end",       "end"});
+        }
 
         public void get(char c) {
             state = table.get(state)[get_col(c)];
@@ -75,6 +74,13 @@ public class N8_m {
             }
             return 3;
         }
+    }
+
+    public static void main(String[] args) {
+        float x = 1.f;
+        N8_m n8_m = new N8_m();
+        int i = n8_m.myAtoi("1.3.3");
+        System.out.println(i);
     }
 
 }

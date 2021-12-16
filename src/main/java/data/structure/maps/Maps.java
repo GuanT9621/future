@@ -31,7 +31,7 @@ public class Maps {
      *      并发度可以理解为程序运行时能够同时更新ConccurentHashMap且不产生锁竞争的最大线程数，
      *      实际上就是ConcurrentHashMap中的分段锁个数，即Segment[]的数组长度，默认的并发度为16
      *
-     * 1.8 利用CAS算法。底层依然由“数组”+链表+红黑树的方式思想
+     * 1.8 利用CAS算法。底层依然由 Node + “数组” + 链表 / 红黑树的方式思想
      */
     ConcurrentMap<String, String> concurrentMap = new ConcurrentHashMap<>();
 }

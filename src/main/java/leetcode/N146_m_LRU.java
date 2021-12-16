@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * 进阶：你是否可以在O(1) 时间复杂度内完成这两种操作？
  */
-public class N146_m {
+public class N146_m_LRU {
     class LinkedNode {
         int key;
         int value;

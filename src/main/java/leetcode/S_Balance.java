@@ -2,6 +2,8 @@ package leetcode;
 
 /**
  * 判断一颗二叉树是否为平衡二叉树
+ *
+ * 同类型 N98_m
  */
 public class S_Balance {
 
@@ -24,13 +26,4 @@ public class S_Balance {
         return Math.max(h1, h2) + 1;
     }
 
-
-    public class TreeNode {
-        int val = 0;
-        TreeNode left = null;
-        TreeNode right = null;
-        public TreeNode(int val) {
-            this.val = val;
-        }
-    }
 }

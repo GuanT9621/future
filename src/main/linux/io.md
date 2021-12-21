@@ -1,11 +1,22 @@
-https://juejin.im/post/5c725dbe51882575e37ef9ed#heading-14
+> https://juejin.im/post/5c725dbe51882575e37ef9ed#heading-14
 
-linux五种IO模型
-Linux下主要的IO主要分为：阻塞IO(Blocking IO)，非阻塞IO(Non-blocking IO)，同步IO(Sync IO)和异步IO(Async IO)。 同步：调用端会一直等待服务端响应，直到返回结果。 异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。 阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂停运行。 非阻塞：在服务端返回前，函数不会阻塞调用端线程，而会立刻返回。
+# linux五种IO模型
+
+## Linux下主要的IO主要分为：
+1. 阻塞IO(Blocking IO)，
+2. 非阻塞IO(Non-blocking IO)，
+3. 同步IO(Sync IO)
+4. 异步IO(Async IO)。 
+
+## 概念解释
+* 同步：调用端会一直等待服务端响应，直到返回结果。 
+* 异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。 
+* 阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂停运行。 
+* 非阻塞：在服务端返回前，函数不会阻塞调用端线程，而会立刻返回。
 
 同步异步的区别在于：服务端在拷贝数据时是否阻塞调用端线程；阻塞和非阻塞的区别在于：调用端线程在调用function后是否立刻返回。要理解这些I/O，需要先理解一些基本的概念。
 
-用户态和核心态
+## 用户态和核心态
 Linux系统中分为核心态(Kernel model)和用户态(User model)，CPU会在两个model之间切换。
 
 核心态代码拥有完全的底层资源控制权限，可以执行任何CPU指令，访问任何内存地址，其占有的处理机是不允许被抢占的。内核态的指令包括：启动I/O，内存清零，修改程序状态字，设置时钟，允许/终止中断和停机。内核态的程序崩溃会导致PC停机。
@@ -16,7 +27,7 @@ Linux系统中分为核心态(Kernel model)和用户态(User model)，CPU会在�
 当CPU在执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会触发由当前运行进程切换到处理此异常的内核相关程序中，也就转到了内核态，比如缺页异常。 c.外围设备的中断
 当外围设备完成用户请求的操作后，会向CPU发出相应的中断信号，这时CPU会暂停执行下一条即将要执行的指令转而去执行与中断信号对应的处理程序，如果先前执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了由用户态到内核态的切换。比如硬盘读写操作完成，系统会切换到硬盘读写的中断处理程序中执行后续操作等。
 
-进程切换
+## 进程切换
 为了控制进程的执行，内核必须有能力挂起正在CPU上运行的进程，并恢复以前挂起的某个进程的执行。这种行为被称为进程切换。因此可以说，任何进程都是在操作系统内核的支持下运行的，是与内核紧密相关的。从一个进程的运行转到另一个进程上运行，这个过程中经过下面这些变化：
 
 保存处理机上下文，包括程序计数器和其他寄存器。
@@ -28,55 +39,65 @@ Linux系统中分为核心态(Kernel model)和用户态(User model)，CPU会在�
 进程阻塞
 正在执行的进程由于一些事情发生，如请求资源失败、等待某种操作完成、新数据尚未达到或者没有新工作做等，由系统自动执行阻塞原语，使进程状态变为阻塞状态。因此，进程阻塞是进程自身的一种主动行为，只有处于运行中的进程才可以将自身转化为阻塞状态。当进程被阻塞，它是不占用CPU资源的。
 
-文件描述符(fd, File Descriptor)
-FD用于描述指向文件的引用的抽象化概念。文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统。
+## 文件描述符(fd, File Descriptor)
+FD用于描述指向文件的引用的抽象化概念。文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。
+当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。
+在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统。
 
-缓存I/O
-缓存IO又被称作标准IO，大多数文件系统的默认IO 操作都是缓存IO。在Linux的缓存IO 机制中，操作系统会将 IO 的数据缓存在文件系统的页缓存（ page cache ）中，也就是说，数据会先被拷贝到操作系统内核的缓冲区中，然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。
+## 缓存I/O
+缓存IO又被称作标准IO，大多数文件系统的默认IO 操作都是缓存IO。
+在Linux的缓存IO 机制中，操作系统会将 IO 的数据缓存在文件系统的页缓存（ page cache ）中，
+也就是说，数据会先被拷贝到操作系统内核的缓冲区中，然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。
 
 缓存IO的缺点：
 数据在传输过程中需要在应用程序地址空间和内核进行多次数据拷贝操作，这些数据拷贝操作所带来的 CPU 以及内存开销是非常大的。
 
-Linux下的五种I/O模型
-Linux下主要有以下五种I/O模型：
+# Linux下的五种I/O模型
+1. 阻塞I/O（blocking IO）
+2. 非阻塞I/O (nonblocking I/O)
+3. I/O 复用 (I/O multiplexing)
+4. 信号驱动I/O (signal driven I/O (SIGIO))
+5. 异步I/O (asynchronous I/O)
 
-阻塞I/O（blocking IO）
-非阻塞I/O (nonblocking I/O)
-I/O 复用 (I/O multiplexing)
-信号驱动I/O (signal driven I/O (SIGIO))
-异步I/O (asynchronous I/O)
-阻塞IO模型
-进程会一直阻塞，直到数据拷贝完成 应用程序调用一个IO函数，导致应用程序阻塞，等待数据准备好。数据准备好后，从内核拷贝到用户空间，IO函数返回成功指示。阻塞IO模型图如下所示：
-
+## 阻塞IO模型
+进程会一直阻塞，直到数据拷贝完成 应用程序调用一个IO函数，导致应用程序阻塞，等待数据准备好。数据准备好后，从内核拷贝到用户空间，
+IO函数返回成功指示。阻塞IO模型图如下所示：
 blocking-io.jpg
-非阻塞IO模型
+
+## 非阻塞IO模型
 通过进程反复调用IO函数，在数据拷贝过程中，进程是阻塞的。模型图如下所示:
-
 non-blocking-io
-IO复用模型
+
+## IO复用模型
 主要是select和epoll。一个线程可以对多个IO端口进行监听，当socket有读写事件时分发到具体的线程进行处理。模型如下所示：
-
 io-multiplexing
-信号驱动IO模型
+
+## 信号驱动IO模型
 信号驱动式I/O：首先我们允许Socket进行信号驱动IO,并安装一个信号处理函数，进程继续运行并不阻塞。当数据准备好时，进程会收到一个SIGIO信号，可以在信号处理函数中调用I/O操作函数处理数据。过程如下图所示：
-
 sigio
-异步IO模型
-相对于同步IO，异步IO不是顺序执行。用户进程进行aio_read系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。等到socket数据准备好了，内核直接复制数据给进程，然后从内核向进程发送通知。IO两个阶段，进程都是非阻塞的。异步过程如下图所示：
 
+## 异步IO模型
+相对于同步IO，异步IO不是顺序执行。
+用户进程进行aio_read系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。
+等到socket数据准备好了，内核直接复制数据给进程，然后从内核向进程发送通知。IO两个阶段，进程都是非阻塞的。异步过程如下图所示：
 aio
-五种IO模型比较
-阻塞IO和非阻塞IO的区别
+
+# 五种IO模型比较
+## 阻塞IO和非阻塞IO的区别
 调用阻塞IO后进程会一直等待对应的进程完成，而非阻塞IO不会等待对应的进程完成，在kernel还在准备数据的情况下直接返回。 同步IO和异步IO的区别
 首先看一下POSIX中对这两个IO的定义：
 
 A synchronous I/O operation causes the requesting process to be blocked until that I/O operation completes;
 An asynchronous I/O operation does not cause the requesting process to be blocked;
-复制代码
-**两者的区别就在于synchronous IO做”IO operation”的时候会将process阻塞。**按照这个定义，之前所述的blocking IO，non-blocking IO，IO multiplexing都属于synchronous IO。注意到non-blocking IO会一直轮询(polling)，这个过程是没有阻塞的，但是recvfrom阶段blocking IO,non-blocking IO和IO multiplexing都是阻塞的。 而asynchronous IO则不一样，当进程发起IO 操作之后，就直接返回再也不理睬了，直到kernel发送一个信号，告诉进程说IO完成。在这整个过程中，进程完全没有被block。
+
+**两者的区别就在于synchronous IO做”IO operation”的时候会将process阻塞。**
+按照这个定义，之前所述的blocking IO，non-blocking IO，IO multiplexing都属于synchronous IO。
+注意到non-blocking IO会一直轮询(polling)，这个过程是没有阻塞的，但是recvfrom阶段blocking IO,non-blocking IO和IO multiplexing都是阻塞的。 
+而asynchronous IO则不一样，当进程发起IO 操作之后，就直接返回再也不理睬了，直到kernel发送一个信号，告诉进程说IO完成。
+在这整个过程中，进程完全没有被block。
 
 io-diff
-IO复用之select、poll、epoll简介
+## IO复用之select、poll、epoll简介
 epoll是linux所特有，而select是POSIX所规定，一般操作系统均有实现。
 
 select

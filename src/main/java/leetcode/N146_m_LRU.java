@@ -74,14 +74,14 @@ public class N146_m_LRU {
             head.next = node;
         }
 
-        private void removeNode(LinkedNode node) {
-            node.prev.next = node.next;
-            node.next.prev = node.prev;
-        }
-
         private void moveToHead(LinkedNode node) {
             removeNode(node);
             addToHead(node);
+        }
+
+        private void removeNode(LinkedNode node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
         }
 
         private LinkedNode removeTail() {

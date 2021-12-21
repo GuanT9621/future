@@ -17,6 +17,7 @@ public class Maps {
      * HashMap使用链表法避免哈希冲突（相同hash值）
      * 当链表长度大于TREEIFY_THRESHOLD（默认为8）时，将链表转换为红黑树（1.8以后优化的）
      * 当然小于UNTREEIFY_THRESHOLD（默认为6）时，又会转回链表以达到性能均衡。
+     * 当一个对象作为Key时，需要重写 hashCode 和 equals
      */
     Map<String, String> map = new HashMap<>();
 

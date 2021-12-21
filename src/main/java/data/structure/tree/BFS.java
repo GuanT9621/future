@@ -1,18 +1,13 @@
 package data.structure.tree;
 
+import leetcode.TreeNode;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class BFS {
-    public class TreeNode {
-        int val = 0;
-        TreeNode left = null;
-        TreeNode right = null;
-        public TreeNode(int val) {
-            this.val = val;
-        }
-    }
 
+    // 广度优先
     public static void print(TreeNode treeNode) {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(treeNode);

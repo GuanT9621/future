@@ -32,16 +32,6 @@ public class N652_m {
         return serial;
     }
 
-
-    public static class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode() {}
-      TreeNode(int val) { this.val = val; }
-      TreeNode(int val, TreeNode left, TreeNode right) {this.val = val;this.left = left;this.right = right;}
-  }
-
     public static void main(String[] args) {
         // [1,2,3,4,null,2,4,null,null,4]
         TreeNode l4r1 = new TreeNode(4);

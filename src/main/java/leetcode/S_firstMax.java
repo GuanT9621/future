@@ -24,8 +24,7 @@ public class S_firstMax {
         int index = 0;
         while (index < array.length) {
             if (!stack.isEmpty() && array[index] > array[stack.peek()]) {
-                Integer pop = stack.pop();
-                result[pop] = array[index];
+                result[stack.pop()] = array[index];
             } else {
                 stack.push(index);
                 index++;

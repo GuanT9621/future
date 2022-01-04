@@ -1,5 +1,8 @@
 package leetcode;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * https://leetcode-cn.com/problems/validate-binary-search-tree/
  * 验证二叉搜索树
@@ -17,8 +20,7 @@ package leetcode;
 public class N98_m {
 
     public boolean isValidBST(TreeNode root) {
-//        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
-        return isValidBST3(root, Long.MIN_VALUE);
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
     // 递归
@@ -29,33 +31,29 @@ public class N98_m {
         if (node.val <= lower || node.val >= upper) {
             return false;
         }
-        return isValidBST(node.left, lower, node.val)
-                && isValidBST(node.right, node.val, upper);
+        return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
     }
 
     // 中序遍历
-    public boolean isValidBST2(TreeNode node) {
-        if (node == null) {
-            return true;
+    public boolean isValidBST2(TreeNode root) {
+        Deque<TreeNode> stack = new LinkedList<>();
+        double inorder = -Double.MAX_VALUE;
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            if (!stack.isEmpty()) {
+                root = stack.pop();
+                // 如果中序遍历得到的节点的值小于等于前一个 inorder，说明不是二叉搜索树
+                if (root.val <= inorder) {
+                    return false;
+                }
+                inorder = root.val;
+                root = root.right;
+            }
         }
-        Long max = Long.MIN_VALUE;
-        boolean result = true;
-        TreeNode temp = node;
-        while (temp != null && result) {
-            temp = temp.right;
-        }
-        return result;
-    }
-
-    // 中序遍历
-    public boolean isValidBST3(TreeNode node, Long max) {
-        if (node == null) {
-            return true;
-        }
-        boolean result = isValidBST3(node.left, max);
-        result = result && node.val > max;
-        result = result && isValidBST3(node.right, Math.max(node.val, max));
-        return result;
+        return true;
     }
 
 }

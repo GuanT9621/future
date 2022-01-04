@@ -18,14 +18,28 @@ import java.util.Arrays;
  */
 public class N1838_m {
 
-    public int maxFrequency(int[] nums, int k) {
+    public static int maxFrequency(int[] nums, int k) {
         Arrays.sort(nums);
-        for (int i=0; i<nums.length; i++) {
-//            for () {
-//
-//            }
+        int n = nums.length;
+        long total = 0;
+        int left = 0; // 左窗口
+        int result = 1;
+        for (int right = 1; right < n; right++) { // 右窗口
+            total = total + (long) (nums[right] - nums[right - 1]) * (right - left);
+            while (total > k) { // 当前窗口不符合要求，收缩左窗口，每次收缩重新计算total，直到满足要求
+                total = total - (nums[right] - nums[left]);
+                left++;
+            }
+            result = Math.max(result, right - left + 1); // 更新本次结果
         }
-        return 0;
+        return result;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = new int[]{3,9,6};
+        int k = 2;
+        int x = maxFrequency(nums, k);
+        System.out.print(x);
     }
 
 }

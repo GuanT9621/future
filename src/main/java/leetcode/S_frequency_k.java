@@ -40,6 +40,7 @@ public class S_frequency_k {
                 if (null == node.children[index]) {
                     node.children[index] = new Trie(c);
                 }
+                // 到达低端
                 if (i == word.length()-1) {
                     node.children[index].frequency++;
                     result = node.children[index].frequency;

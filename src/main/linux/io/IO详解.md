@@ -64,14 +64,13 @@ FD用于描述指向文件的引用的抽象化概念。文件描述符在形式
 数据准备好后，从内核拷贝到用户空间， IO函数返回成功指示。
 阻塞IO模型图如下所示：![Alt text](blockIO.png "title")
 
-
 ## 非阻塞IO模型
 通过进程反复调用IO函数，在数据拷贝过程中，进程是阻塞的。
-![Alt text](blockIO.png "title")
+![Alt text](nonblockIO.png "title")
 
 ## IO复用模型
 主要是select和epoll。一个线程可以对多个IO端口进行监听，当socket有读写事件时分发到具体的线程进行处理。
-![Alt text](nonblockIO.png "title")
+![Alt text](multiplexingIO.png "title")
 
 ## 信号驱动IO模型
 信号驱动式I/O：首先我们允许Socket进行信号驱动IO,并安装一个信号处理函数，进程继续运行并不阻塞。
@@ -98,7 +97,9 @@ An asynchronous I/O operation does not cause the requesting process to be blocke
 而asynchronous IO则不一样，当进程发起IO 操作之后，就直接返回再也不理睬了，直到kernel发送一个信号，告诉进程说IO完成。
 在这整个过程中，进程完全没有被block。
 
-io-diff
+## 异步 I/O 与信号驱动 I/O 的区别
+异步 I/O 的信号是通知应用进程 I/O 完成，而信号驱动 I/O 的信号是通知应用进程可以开始 I/O
+
 ## IO复用之select、poll、epoll简介
 epoll是linux所特有，而select是POSIX所规定，一般操作系统均有实现。
 

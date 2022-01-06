@@ -2,19 +2,20 @@ package leetcode;
 
 /**
  * 思路总结
+ *
  * 双指针
  * 双指针卡尺
  * 滑动窗口
- * 栈的活用
+ * 栈的活用                                  例如 S_Calc
  * 单调栈
  * 双栈法
  * 递归（几乎所有的树，都需要递归）
  * 回溯算法 = 深度优先搜索 -> 递归(例如全排列)
- * DFS Deep First Search 深度优先搜索
- * BFS Breath First Search 广度优先搜索
+ * DFS Deep First Search 深度优先搜索         例如 N655_m
+ * BFS Breath First Search 广度优先搜索       例如 S_PrintTree
  * 动态规划：先写动态规划转移方程
- * 自动机 例如 N8
- * 前缀树 N208
+ * 自动机                                      例如 N8
+ * 前缀树                                      例如 N208
  *
  *
  *

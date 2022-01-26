@@ -13,7 +13,7 @@ package leetcode;
  * 回溯算法 = 深度优先搜索 -> 递归(例如全排列)
  * DFS Deep First Search 深度优先搜索         例如 N655_m
  * BFS Breath First Search 广度优先搜索       例如 S_PrintTree
- * 动态规划：先写动态规划转移方程
+ * 动态规划：动态规划转移方程，边界条件                  例如 N64 N198
  * 自动机                                      例如 N8
  * 前缀树                                      例如 N208
  *

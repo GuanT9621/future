@@ -10,58 +10,50 @@ package leetcode;
  */
 public class N2_m {
 
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val;this.next = next; }
-
-        public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-            ListNode head = new ListNode(0);
-            ListNode cur = head;
-            int carry = 0;
-            while (null != l1 || null != l2) {
-                int n1 = null == l1 ? 0 : l1.val;
-                int n2 = null == l2 ? 0 : l2.val;
-                int i = n1 + n2 + carry;
-                int sum = i % 10;
-                carry = i / 10;
-                cur.next = new ListNode(sum);
-                cur = cur.next;
-                if (null != l1) {
-                    l1 = l1.next;
-                }
-                if (null != l2) {
-                    l2 = l2.next;
-                }
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(0);
+        ListNode cur = head;
+        int carry = 0;
+        while (null != l1 || null != l2) {
+            int n1 = null == l1 ? 0 : l1.val;
+            int n2 = null == l2 ? 0 : l2.val;
+            int i = n1 + n2 + carry;
+            int sum = i % 10;
+            carry = i / 10;
+            cur.next = new ListNode(sum);
+            cur = cur.next;
+            if (null != l1) {
+                l1 = l1.next;
             }
-            if (0 != carry) {
-                cur.next = new ListNode(carry);
+            if (null != l2) {
+                l2 = l2.next;
             }
-            return head.next;
         }
-
-        public static void main(String[] args) {
-            ListNode n3 = new ListNode(1, null);
-            ListNode n2 = new ListNode(2, n3);
-            ListNode n1 = new ListNode(7, n2);
-
-            ListNode m3 = new ListNode(3, null);
-            ListNode m2 = new ListNode(6, m3);
-            ListNode m1 = new ListNode(8, m2);
-            ListNode listNode = addTwoNumbers(n1, m1);
-            print(listNode);
+        if (0 != carry) {
+            cur.next = new ListNode(carry);
         }
+        return head.next;
+    }
 
-        private static void print(ListNode head) {
-            ListNode print = new ListNode(head.val, head.next);
-            while (null != print) {
-                System.out.print(print.val);
-                print = print.next;
-            }
-            System.out.println();
+    public static void main(String[] args) {
+        ListNode n3 = new ListNode(1, null);
+        ListNode n2 = new ListNode(2, n3);
+        ListNode n1 = new ListNode(7, n2);
+
+        ListNode m3 = new ListNode(3, null);
+        ListNode m2 = new ListNode(6, m3);
+        ListNode m1 = new ListNode(8, m2);
+        ListNode listNode = addTwoNumbers(n1, m1);
+        print(listNode);
+    }
+
+    private static void print(ListNode head) {
+        ListNode print = new ListNode(head.val, head.next);
+        while (null != print) {
+            System.out.print(print.val);
+            print = print.next;
         }
+        System.out.println();
     }
 
 }

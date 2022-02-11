@@ -11,16 +11,19 @@ import java.util.List;
  *
  * 思路 数学
  * 分子分母的最大公约数为 1，则为最简分数
+ * 优化：在分母确定的情况下，分子的范围为 0 < 分子 < 分母
  * O(n^2 log n) O(1)
+ *
+
  */
 public class N1447_m {
 
     public static List<String> simplifiedFractions(int n) {
         List<String> result = new ArrayList<>();
-        for (int i=1; i<n; i++) {
-            for (int j=2; j<=n; j++) {
-                if (i == 1 || (i < j && 1 == gcd(j, i))) {
-                    result.add(i + "/" + j);
+        for (int i=2; i<=n; i++) { // 分母
+            for (int j=1; j<i; j++) { // 分子
+                if (j == 1 || 1 == gcd(j, i)) {
+                    result.add(j + "/" + i);
                 }
             }
         }
@@ -28,7 +31,7 @@ public class N1447_m {
     }
 
     private static int gcd(int m,int n) {
-        return n == 0 ? m : gcd(n,m % n);
+        return n == 0 ? m : gcd(n, m % n);
     }
 
     public static void main(String[] args) {

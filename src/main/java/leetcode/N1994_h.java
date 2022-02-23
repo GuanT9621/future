@@ -22,7 +22,8 @@ package leetcode;
 public class N1994_h {
 
     public int numberOfGoodSubsets(int[] nums) {
-
+        // todo method
+        return 1;
     }
 
 }

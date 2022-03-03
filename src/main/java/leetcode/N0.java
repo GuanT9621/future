@@ -54,42 +54,4 @@ package leetcode;
  */
 public class N0 {
 
-    /**
-     * 检测大写字母
-     * 我们定义，在以下情况时，单词的大写用法是正确的：
-     * 全部字母都是大写，比如 "USA" 。
-     * 单词中所有字母都不是大写，比如 "leetcode" 。
-     * 如果单词不只含有一个字母，只有首字母大写， 比如 "Google" 。
-     * 给你一个字符串 word 。如果大写用法正确，返回 true ；否则，返回 false 。
-     */
-    public boolean detectCapitalUse(String word) {
-        char[] chars = word.toCharArray();
-        // A-Z 65-90  a-z 97-122
-        if (chars[0] <= 90) {
-            if (chars.length > 1) {
-                if (chars[1] <= 90) {
-                    for (int i = 2; i < chars.length; i++) {
-                        if (chars[i] >= 97) {
-                            return false;
-                        }
-                    }
-                } else {
-                    for (int i = 2; i < chars.length; i++) {
-                        if (chars[i] <= 90) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        } else {
-            for (char c : chars) {
-                if (c <= 90) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-
 }

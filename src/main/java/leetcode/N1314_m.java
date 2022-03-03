@@ -45,10 +45,38 @@ public class N1314_m {
         return ans;
     }
 
+    public int[][] matrixBlockSum2(int[][] mat, int k) {
+        int row = mat.length;
+        int column = mat[0].length;
+        // 计算二维前缀和数组
+        int[][] p = new int[row + 1][column + 1];
+        for (int r = 1; r <= row; r++) {
+            for (int c = 1; c <= column; c++) {
+                p[r][c] = p[r - 1][c] + p[r][c - 1] - p[r - 1][c - 1] + mat[r - 1][c - 1];
+            }
+        }
+        // 计算区域和
+        int[][] ans = new int[row][column];
+        for (int i=0; i < row; i++) {
+            for (int j=0; j < column; j++) {
+                int x1 = i + k + 1;
+                int y1 = j + k + 1;
+                int x2 = i - k;
+                int y2 = j - k;
+                x1 = Math.max(Math.min(x1, row), 0);
+                y1 = Math.max(Math.min(y1, column), 0);
+                x2 = Math.max(Math.min(x2, row), 0);
+                y2 = Math.max(Math.min(y2, column), 0);
+                ans[i][j] = p[x1][y1] - p[x2][y1] - p[x1][y2] + p[x2][y2];
+            }
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
        int[][] mat = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
        int k = 1;
-        int[][] ints = new N1314_m().matrixBlockSum(mat, k);
+        int[][] ints = new N1314_m().matrixBlockSum2(mat, k);
         for (int[] is : ints) {
             for (int i : is) {
                 System.out.print(i + " ");

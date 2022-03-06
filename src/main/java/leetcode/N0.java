@@ -8,7 +8,7 @@ package leetcode;
  * 栈的活用
  *      例如 S_Calc
  * 单调栈
- *      例如 S_firstMax
+ *      例如 S_firstMax N2104
  * 双栈法
  *
  * 递归（几乎所有的树，都需要递归）
@@ -49,7 +49,7 @@ package leetcode;
  * 未处理的题目 N1719-树的构建 N906 N1994
  * TODO 1927 688
  * UNDO 1314 1292
- * DOING 1156 721 1405 1601
+ * DOING 1156 721 1405 1601 2014 manacher
  * 有意思 N343
  */
 public class N0 {

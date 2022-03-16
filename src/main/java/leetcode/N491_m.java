@@ -31,7 +31,7 @@ public class N491_m {
         List<List<Integer>> ans = new ArrayList<>();
         n = nums.length;
         int total = 1 << n;
-        for (int i=0; i<total; i++) {
+        for (int i=0; i < total; i++) {
             findSubsequences(i, nums);
             int hashCode = getHash(263, (int) 1E9 + 7);
 //            int hashCode = temp.hashCode();
@@ -43,13 +43,13 @@ public class N491_m {
         return ans;
     }
 
-    public void findSubsequences(int mask, int[] nums) { // mask的二进制代表一种排列情况
+    public void findSubsequences(int mark, int[] nums) { // mask的二进制代表一种排列情况
         temp.clear();
         for (int i = 0; i < n; ++i) {
-            if ((mask & 1) != 0) { // 每次计算最低位是0/1 ，1则加入
+            if ((mark & 1) != 0) { // 每次计算最低位是0/1 ，1则加入
                 temp.add(nums[i]);
             }
-            mask >>= 1; // 右移一位
+            mark >>= 1; // 右移一位
         }
     }
     public int getHash(int base, int mod) { // 为什么重写hash计算

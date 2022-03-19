@@ -24,10 +24,10 @@ import java.util.Set;
 public class N432_h {
 
     class Node {
-        Set<String> keys;
-        Node prev;
-        Node next;
-        int count;
+        public Set<String> keys;
+        public Node prev;
+        public Node next;
+        public int count;
         public Node() {
             this("", 0);
         }
@@ -37,13 +37,14 @@ public class N432_h {
             keys = new HashSet<>();
             keys.add(key);
         }
-        private void insert(Node node) {
+        public Node insert(Node node) {
             node.prev = this;
             node.next = this.next;
             node.next.prev = node;
-            node.next = node;
+            node.prev.next = node;
+            return node;
         }
-        private void remove() {
+        public void remove() {
             this.prev.next = this.next;
             this.next.prev = this.prev;
         }
@@ -61,60 +62,84 @@ public class N432_h {
 
         public void inc(String key) {
             if (map.containsKey(key)) {
-                Node node = map.get(key);
-                Node next = node.next;
-                if (node) {
-
+                Node cur = map.get(key);
+                if (cur.next.count == cur.count + 1) {
+                    // 现有 Node，下一个node count 为 当前的count + 1
+                    cur.next.keys.add(key);
+                    map.put(key, cur.next);
                 } else {
-
+                    // 新建 Node，下一个不是当前count + 1
+                    map.put(key, cur.insert(new Node(key, cur.count + 1)));
                 }
-                if (node.next != root) {
-                    node.prev.next = node.next;
-                    node.next.prev = node.prev;
-                    node.prev = node.next;
-                    node.next = node.next.next;
-                    node.next.next.prev = node;
+                // 是否移除当前的 cur，当前node，keys 为空
+                cur.keys.remove(key);
+                if (cur.keys.isEmpty()) {
+                    cur.remove();
                 }
             } else {
                 // key 不在链表
-                if (root.next == root || root.next.count > 1) {
-                    Node node = new Node(key, 1);
-                    root.insert(node);
-                    map.put(key, node);
+                if (root.next.count == 1) {
+                    // 现有 Node，下一个node count 为 1
+                    root.next.keys.add(key);
+                    map.put(key, root.next);
                 } else {
-                    Node node = root.next;
-                    node.keys.add(key);
-                    map.put(key, node);
+                    // 新建 Node 下一个不是 1
+                    map.put(key, root.insert(new Node(key, 1)));
                 }
             }
         }
 
         public void dec(String key) {
             // 测试用例保证在
-            Node node = map.get(key);
-            node.count--;
-            if (node.count == 0) {
-                node.remove();
+            Node cur = map.get(key);
+            if (cur.count == 1) {
+                map.remove(key);
+            } else {
+                Node prev = cur.prev;
+                if (prev.count == cur.count - 1) {
+                    // 现有 Node，前一个node count 为 当前的count - 1
+                    prev.keys.add(key);
+                    map.put(key, prev);
+                } else {
+                    // 新建 Node，下一个不是当前count - 1
+                    map.put(key, prev.insert(new Node(key, cur.count - 1)));
+                }
             }
-            if (node.prev != root) {
-                Node prev = node.prev;
-                remove(prev);
-                prev.prev = node;
-                prev.next = node.next;
-                node.next.prev = prev;
-                node.next = prev;
+            // 是否移除 当前node，keys 为空
+            cur.keys.remove(key);
+            if (cur.keys.isEmpty()) {
+                cur.remove();
             }
         }
 
-
-
         public String getMaxKey() {
-            return root.prev.string;
+            return root.prev.keys.stream().findFirst().orElse("");
         }
 
         public String getMinKey() {
-            return root.next.string;
+            return root.next.keys.stream().findFirst().orElse("");
         }
+    }
+
+    public static void main(String[] args) {
+        // ["AllOne","inc","inc","inc","dec","inc","inc","getMaxKey","dec","dec","dec","getMaxKey"]
+        // [[],["hello"],["world"],["hello"],["world"],["hello"],["leet"],[],["hello"],["hello"],["hello"],[]]
+        // [null,null,null,null,null,null,null,"hello",null,null,null,"leet"]
+
+        AllOne allOne = new N432_h().new AllOne();
+        allOne.inc("hello");
+        allOne.inc("world");
+        allOne.inc("hello");
+        allOne.dec("world");
+        allOne.inc("hello");
+        allOne.inc("leet");
+        System.out.println(allOne.getMaxKey());
+//        System.out.println(allOne.getMinKey());
+        allOne.dec("hello");
+        allOne.dec("hello");
+        allOne.dec("hello");
+        System.out.println(allOne.getMaxKey());
+//        System.out.println(allOne.getMinKey());
     }
 
 }

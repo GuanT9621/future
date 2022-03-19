@@ -1,0 +1,27 @@
+异常代码
+dataList.stream().parallel().foreach(mapper::insert);
+报错 Lock wait timeout exceeded
+
+分析过程 ：第一次判断错误了，真实原因应该是2
+
+一 插入意向间隙锁
+原因：并发插入，取不到锁，超时异常。
+原理：参考 https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-insert-intention-locks
+1 插入数据之前 InnoDB 会加上一种间隙锁：插入意向锁 Insert Intention Locks
+2 当多事务并发插入相同的gap空隙时，只要插入的记录不是gap间隙中的相同位置，则无需等待其他session就可完成
+3 假设有一个记录索引包含键值4和7，不同的事务分别插入5和6，每个事务都会产生一个加在4-7之间的插入意向锁，获取在插入行上的排它锁，但是不会被互相锁住，因为数据行并不冲突。
+4 假设发生了一个唯一键冲突错误，那么将会在重复的索引记录上加读锁。当有多个session同时插入相同的行记录时，如果另外一个session已经获得该行的排它锁，那么将会导致死锁。
+
+二 自增锁
+原因：并发插入，自增锁是一个表级锁，导致取锁超时。
+原理：参考 https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html#innodb-auto-inc-locks
+1 在插入到具有 AUTO_INCREMENT 列的表中的事务会使用自增锁
+2 如果一个事务正在向表中插入值，则任何其他事务都必须等待在该表中执行自己的插入操作，以便第一个事务插入的行接收连续的主键值
+拓展
+变量 innodb_autoinc_lock_mode 控制用于自增锁定的算法。它允许您选择如何在可预测的自动递增值序列和插入操作的最大并发性之间进行权衡。
+>>> show variables like 'innodb_autoinc_lock_mode';
+innodb_autoinc_lock_mode 有3种配置模式：0、1、2，分别对应”传统模式”, “连续模式”, “交错模式”。
+传统模式：涉及auto-increment列的插入语句加的表级AUTO-INC锁，只有插入执行结束后才会释放锁。这是一种兼容MySQL 5.1之前版本的策略。
+连续模式：可以事先确定插入行数的语句(包括单行和多行插入)，分配连续的确定的auto-increment值；对于插入行数不确定的插入语句，仍加表锁。
+    这种模式下，事务回滚，auto-increment值不会回滚，换句话说，自增列内容会不连续。
+交错模式：同一时刻多条SQL语句产生交错的auto-increment值。

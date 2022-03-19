@@ -17,7 +17,7 @@ package leetcode;
  *      例如 8皇后问题，
  *
  * DFS Deep First Search 深度优先搜索
- *      例如 N655_m N2044
+ *      例如 N655_m N2044 N720
  * BFS Breath First Search 广度优先搜索
  *      例如 S_PrintTree
  * 记忆化搜索
@@ -29,7 +29,7 @@ package leetcode;
  * 自动机
  *      例如 N8
  * 前缀树
- *      例如 N208 N677
+ *      例如 N208 N677 N720
  * 异或计算
  *      例如 N1720 N1734
  * 全排列
@@ -59,6 +59,28 @@ import java.util.Stack;
  * 有意思 N343 N2044
  */
 public class N0 {
+
+    StringBuilder ans = new StringBuilder();
+
+    public String tree2str(TreeNode root) {
+        dfs(root);
+        return ans.substring(1, ans.length() - 1);
+    }
+    private void dfs(TreeNode treeNode) {
+        ans.append("(");
+        ans.append(treeNode.val);
+        if (treeNode.left == null && treeNode.right != null) {
+            ans.append("()");
+        }
+        if (treeNode.left != null) {
+            tree2str(treeNode.left);
+        }
+        if (treeNode.right != null) {
+            tree2str(treeNode.right);
+        }
+        ans.append(")");
+    }
+
 
     public boolean canThreePartsEqualSum(int[] arr) {
         // 暴力，优化

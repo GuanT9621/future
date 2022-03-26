@@ -1,0 +1,18 @@
+场景：
+1, T1：begin; select * from t_student where age = 20 lock in share mode;
+2, T2: begin; select * from t_student where age = 20 lock in share mode;
+
+情况一：
+3, T1: update t_student set address="xian" where age=19; (Lock wait timeout exceeded; try restarting transaction)
+4, T2: commit;
+5, T1: update t_student set address="xian" where age=19; (success) T1: commit;
+
+在第 3 步，等待一定时间后提示了锁定超时，当时 T1 已经加上了共享锁 S，那么说明是去加排它锁 X 超时了。说明在加了共享锁的前提下，进行更新操作，也会去加排它锁。
+在第 4 5 步，等到 T2 提交后，再执行 T1 就可以成功了。说明在释放了共享锁后，T1 在持有共享锁的同时，加排它锁成功了。
+
+情况二：
+3, T1: update t_student set address="xian" where age=19;
+4, T2: update t_student set address="xian" where age=20; (Deadlock found when trying to get lock; try restarting transaction)
+   T1: (success) T1: commit;
+
+在第 3 步，当 T1 未超时的时候，去 T2 执行 update；可以看到，T2 立刻打印了死锁信息，T1 立刻完成了执行信息。

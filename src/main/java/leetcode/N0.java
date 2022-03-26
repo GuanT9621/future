@@ -47,7 +47,10 @@ package leetcode;
 /** 关于数的处理：最好列举一些数字，注意下特殊场景，比如位数的变化，0，负数，一位数，等。 */
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
@@ -150,6 +153,46 @@ public class N0 {
         while (!stack.isEmpty()) {
             Integer pop = stack.pop();
             ans[pop] = prices[pop];
+        }
+        return ans;
+    }
+
+
+    public boolean findTarget(TreeNode root, int k) {
+        HashSet<Integer> set = new HashSet<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            TreeNode pop = stack.pop();
+            if (set.contains(k - pop.val)) {
+                return true;
+            }
+            set.add(pop.val);
+            if (pop.left != null) {
+                stack.push(pop.left);
+            }
+            if (pop.right != null) {
+                stack.push(pop.right);
+            }
+        }
+        return false;
+    }
+
+    public int[][] imageSmoother(int[][] img) {
+        final int[][] parts = new int[][]{{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {0, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
+        int[][] ans = new int[img.length][img[0].length];
+        for (int i=0; i < img.length; i++) {
+            for (int j=0; j < img[0].length; j++) {
+                int total = 0;
+                int count = 0;
+                for (int[] part : parts) {
+                    if (i + part[0] >= 0 && j + part[1] >= 0 && i + part[0] < img.length && j + part[1] < img[0].length) {
+                        count++;
+                        total += img[i + part[0]][j + part[1]];
+                    }
+                }
+                ans[i][j] = total / count;
+            }
         }
         return ans;
     }

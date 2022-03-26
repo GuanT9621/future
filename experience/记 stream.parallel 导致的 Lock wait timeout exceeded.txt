@@ -23,5 +23,5 @@ dataList.stream().parallel().foreach(mapper::insert);
 innodb_autoinc_lock_mode 有3种配置模式：0、1、2，分别对应”传统模式”, “连续模式”, “交错模式”。
 传统模式：涉及auto-increment列的插入语句加的表级AUTO-INC锁，只有插入执行结束后才会释放锁。这是一种兼容MySQL 5.1之前版本的策略。
 连续模式：可以事先确定插入行数的语句(包括单行和多行插入)，分配连续的确定的auto-increment值；对于插入行数不确定的插入语句，仍加表锁。
-    这种模式下，事务回滚，auto-increment值不会回滚，换句话说，自增列内容会不连续。
+        这种模式下，事务回滚，auto-increment值不会回滚，换句话说，自增列内容会不连续。
 交错模式：同一时刻多条SQL语句产生交错的auto-increment值。

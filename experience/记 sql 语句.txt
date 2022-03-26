@@ -1,0 +1,26 @@
+一个 sql 实现数据交换，比如 Sex 字段将所有男性1改为女性0，女性0改为男性1
+
+方法一
+>>> update salary set sex = if(sex='m', 'f' , 'm');
+语法
+IF(condition, value_if_true, value_if_false)
+
+方法二
+>>> update salary set sex = (case sex when 'm' then 'f' else 'm' end);
+语法
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+
+方法三
+>>> update salary set sex = char(ascii('m') + ascii('f') - ascii(sex));
+方法
+总和减，如同 0，1互换，即 1 - sex 即可。但仅能用于两个情况的互换。
+
+方法四
+>>> update salary set sex = char(ascii(sex) ^ ascii('m') ^ ascii('f'));
+方法
+异或，如同 0，1互换，即 sex ^ 0 ^ 1 即可。但仅能用于两个情况的互换。

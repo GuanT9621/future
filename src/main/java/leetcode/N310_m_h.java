@@ -26,7 +26,7 @@ import java.util.Queue;
  */
 public class N310_m_h {
 
-    public static List<Integer> findMinHeightTrees(int n, int[][] edges) {
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
         List<Integer> res = new ArrayList<>();
         /*只有一个节点*/
         if (n == 1) {
@@ -50,7 +50,9 @@ public class N310_m_h {
         Queue<Integer> queue = new LinkedList<>();
         /*把所有出度为1的节点，也就是叶子节点入队*/
         for (int i = 0; i < n; i++) {
-            if (degree[i] == 1) queue.offer(i);
+            if (degree[i] == 1) {
+                queue.offer(i);
+            }
         }
         /*循环条件当然是经典的不空判断*/
         while (!queue.isEmpty()) {
@@ -81,7 +83,52 @@ public class N310_m_h {
 
     public static void main(String[] args) {
         int[][] edges = new int[][]{new int[]{1,0}, new int[]{1,2}, new int[]{1,3}};
-        List<Integer> minHeightTrees = findMinHeightTrees(4, edges);
+        List<Integer> minHeightTrees = new N310_m_h().findMinHeightTrees2(4, edges);
         System.out.println(minHeightTrees);
     }
+
+    public List<Integer> findMinHeightTrees2(int n, int[][] edges) {
+        List<Integer> res = new ArrayList<>();
+        if (n == 1) {
+            res.add(0);
+            return res;
+        }
+        // 计算出度、记录相邻节点
+        int[] degree = new int[n];
+        List<List<Integer>> map = new ArrayList<>();
+        for (int i=0; i < n; i++) {
+            map.add(new ArrayList<>());
+        }
+        for (int[] edge : edges) {
+            degree[edge[0]]++;
+            degree[edge[1]]++;
+            map.get(edge[0]).add(edge[1]);
+            map.get(edge[1]).add(edge[0]);
+        }
+        // 保存所有的叶子节点
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i=0; i < n; i++) {
+            if (degree[i] == 1) {
+                queue.offer(i);
+            }
+        }
+        // 进行剪枝
+        while (!queue.isEmpty()) {
+            res = new ArrayList<>();
+            int size = queue.size();
+            for (int i=0; i < size; i++) {
+                Integer poll = queue.poll();
+                res.add(poll);
+                List<Integer> neighbors = map.get(poll);
+                for (Integer neighbor : neighbors) {
+                    degree[neighbor]--;
+                    if (degree[neighbor] == 1) {
+                        queue.offer(neighbor);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
 }

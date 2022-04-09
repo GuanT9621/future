@@ -8,3 +8,6 @@
 
 ## 判断标准  
 使用explain，可以通过输出的extra列来判断，对于一个索引覆盖查询，显示为using index,MySQL查询优化器在执行查询前会决定是否有索引覆盖查询  
+
+https://www.51cto.com/article/687137.html
+https://dev.mysql.com/doc/refman/8.0/en/column-indexes.html

@@ -53,16 +53,19 @@ package leetcode;
 /** 关于数的处理：最好列举一些数字，注意下特殊场景，比如位数的变化，0，负数，一位数，等。 */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 /**
  * 未处理的题目 N1719-树的构建 N906 N1994
  * TODO 1927 688
  * UNDO 1314 1292
- * DOING 1156 721 1405 1601 2014 manacher 798 2122
+ * DOING 1156 721 1405 1601 2014 manacher 798 2122 385 307
  * 有意思 N343 N2044
  */
 public class N0 {
@@ -291,9 +294,69 @@ public class N0 {
         return false;
     }
 
+    public int uniqueMorseRepresentations(String[] words) {
+        String[] meta = new String[]{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        Set<String> set = new HashSet<>();
+        for (String string : words) {
+            StringBuilder sb = new StringBuilder();
+            for (int i=0; i < string.length(); i++) {
+                sb.append(meta[string.charAt(i) - 'a']);
+            }
+            set.add(sb.toString());
+        }
+        return set.size();
+    }
+
+    public int[] numberOfLines(int[] widths, String s) {
+        int[] ans = new int[2];
+        int temp = 0;
+        for (int i=0; i < s.length(); i++) {
+            int c = widths[s.charAt(i) - 'a'];
+            if (temp + c > 100) {
+                temp = c;
+                ans[0]++;
+            } else {
+                temp += c;
+            }
+        }
+        ans[0] += temp == 0 ? 0 : 1;
+        ans[1] = temp;
+        return ans;
+    }
+
+    public static String word(String paragraph, String[] banned) {
+        Set<String> set = new HashSet<>(Arrays.asList(banned));
+        Map<String, Integer> map = new HashMap<>();
+        paragraph += ".";
+        String word = "";
+        for (int i=0; i < paragraph.length(); i++) {
+            char ch = paragraph.charAt(i);
+            if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+                word += ch;
+            } else {
+                word = word.toLowerCase();
+                if (!set.contains(word) && !word.isEmpty()) {
+                    map.put(word, map.getOrDefault(word, 0) + 1);
+                }
+                word = "";
+            }
+        }
+
+        String ans = "";
+        int max = 0;
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (max < entry.getValue()) {
+                ans = entry.getKey();
+                max = entry.getValue();
+            }
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
-        boolean b = rotateString("bbbacddceeb", "ceebbbbacdd");
-        System.out.println(b);
+        String word = word("Bob hit a ball, the hit BALL flew far after it was hit.",
+                new String[]{"hit"});
+        System.out.println(word);
     }
 
 }

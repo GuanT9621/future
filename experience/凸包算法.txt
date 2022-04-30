@@ -1,0 +1,13 @@
+凸包算法
+linking: https://en.wikipedia.org/wiki/Convex_hull_algorithms
+
+1 礼品包装 AKA Jarvis 算法
+    linking: https://en.wikipedia.org/wiki/Gift_wrapping_algorithm
+
+
+2 扫描法 AKA Graham 算法
+    linking: https://en.wikipedia.org/wiki/Graham_scan
+
+
+3 单调链 AKA Andrew 算法
+    linking: https://en.wikipedia.org/wiki/Convex_hull_algorithms

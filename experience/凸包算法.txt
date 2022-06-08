@@ -1,5 +1,20 @@
 凸包算法
 linking: https://en.wikipedia.org/wiki/Convex_hull_algorithms
+原理：
+点：A（x1，y1），B（x2，y2）
+向量AB=（x2-x1，y2-y1）=（x，y）
+
+                  ｜ i   j   k |
+向量的叉积：a X b = ｜ x1  y1  0 | = (y1z2 - y2z1)i - (x1z2- x2z1)j + (x1y2 - x2y1)k
+                  ｜ x2  y2  0 |
+
+a X b = (x1y2 - x2y1)
+通过结果的正负判断两矢量之间的顺逆时针关系
+ 若 a X b > 0，表示a在b的顺时针方向上
+ 若 a X b < 0，表示a在b的逆时针方向上
+ 若 a X b == 0，表示a与b共线，但不确定方向是否相同
+
+tips: 在二维空间中，叉乘还有另外一个几何意义就是：a X b 等于由向量a和向量b构成的平行四边形的面积。
 
 1 礼品包装 AKA Jarvis 算法
     linking: https://en.wikipedia.org/wiki/Gift_wrapping_algorithm

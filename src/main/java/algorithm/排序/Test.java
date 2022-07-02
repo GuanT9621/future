@@ -1,4 +1,4 @@
-package algorithm.sort;
+package algorithm.排序;
 
 public class Test {
     private static final String TITEL_FORMAT = "\n%-10s %-15s";

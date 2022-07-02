@@ -1,11 +1,14 @@
 package leetcode;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -161,7 +164,8 @@ public class N {
                 int total = 0;
                 int count = 0;
                 for (int[] part : parts) {
-                    if (i + part[0] >= 0 && j + part[1] >= 0 && i + part[0] < img.length && j + part[1] < img[0].length) {
+                    if (i + part[0] >= 0 && j + part[1] >= 0
+                            && i + part[0] < img.length && j + part[1] < img[0].length) {
                         count++;
                         total += img[i + part[0]][j + part[1]];
                     }
@@ -240,7 +244,8 @@ public class N {
     }
 
     public int uniqueMorseRepresentations(String[] words) {
-        String[] meta = new String[]{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
+        String[] meta = new String[]{".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..",
+                "--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
         Set<String> set = new HashSet<>();
         for (String string : words) {
             StringBuilder sb = new StringBuilder();
@@ -329,7 +334,7 @@ public class N {
             }
         }
         ci = -1;
-        for (int i = n - 1; i >=0; i--) {
+        for (int i = n - 1; i >= 0; i--) {
             if (s.charAt(i) == c) {
                 ci = i;
             } else {
@@ -341,7 +346,8 @@ public class N {
 
     public int binaryGap(int n) {
         // 遍历 traversal
-        int max = 0, right = -1;
+        int max = 0;
+        int right = -1;
         for (int index = 0; n != 0; index++) {
             if (n % 2 == 1) {
                 if (right != -1) {
@@ -354,7 +360,8 @@ public class N {
         return max;
     }
     public int binaryGap1(int n) {
-        int last = -1, ans = 0;
+        int last = -1;
+        int ans = 0;
         for (int i = 0; n != 0; ++i) {
             if ((n & 1) == 1) {
                 if (last != -1) {
@@ -448,8 +455,399 @@ public class N {
         return 0;
     }
 
+    class RecentCounter {
+        Queue<Integer> queue;
+        public RecentCounter() {
+            queue = new ArrayDeque<>();
+        }
+        public int ping(int t) {
+            queue.offer(t);
+            int t0 = t - 3000;
+            while (queue.peek() < t0) {
+                queue.poll();
+            }
+            return queue.size();
+        }
+    }
+
+    public int[] diStringMatch(String s) {
+        // 942 先生成，再交换
+        int n = s.length();
+        int[] ans = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+            ans[i] = i;
+        }
+        boolean done = false;
+        while (!done) {
+            done = true;
+            for (int i = 0; i < n; i++) {
+                if (('I' == s.charAt(i) && ans[i] > ans[i + 1]) || ('D' == s.charAt(i) && ans[i] < ans[i + 1])) {
+                    int temp = ans[i];
+                    ans[i] = ans[i + 1];
+                    ans[i + 1] = temp;
+                    done = false;
+                }
+            }
+        }
+        return ans;
+    }
+
+    public int[] diStringMatch1(String s) {
+        // 942 贪心算法
+        int n = s.length();
+        int min = 0;
+        int max = n;
+        int[] ans = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            if ('I' == s.charAt(i)) {
+                ans[i] = min++;
+            } else
+            if ('D' == s.charAt(i)) {
+                ans[i] = max--;
+            }
+        }
+        ans[n] = min;
+        return ans;
+    }
+
+    public int minDeletionSize(String[] strs) {
+        // 944
+        int row = strs.length;
+        int column = strs[0].length();
+        int ans = 0;
+        for (int c = 0; c < column; c++) {
+            for (int r = 0; r < row; r++) {
+                if (r + 1 < row && strs[r].charAt(c) > strs[r + 1].charAt(c)) {
+                    ans++;
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+
+    public boolean oneEditAway(String first, String second) {
+        int n = first.length();
+        int m = second.length();
+        if (n - m < -1 || n - m > 1) {
+            return false;
+        }
+        if (n == m && n == 1) {
+            return true;
+        }
+        int diff = 0;
+        for (int i = 0, j = 0; i < n && j < m; i++, j++) {
+            if (first.charAt(i) != second.charAt(j)) {
+                diff++;
+                if (diff > 1) {
+                    return false;
+                }
+                if (n < m) {
+                    i--;
+                } else if (n > m) {
+                    j--;
+                }
+            }
+        }
+        return true;
+    }
+
+    public double largestTriangleArea(int[][] points) {
+        // 812 组成最大面积三角形：海伦公式 暴力
+        double max = 0;
+        for (int[] a : points) {
+            for (int[] b : points) {
+                double ab = line(a, b);
+                if (ab == 0) {
+                    continue;
+                }
+                for (int[] c : points) {
+                    double bc = line(b, c);
+                    double ac = line(a, c);
+                    if (bc == 0 || ac == 0) {
+                        continue;
+                    }
+                    double s = (ab + ac + bc) / 2;
+                    double area = Math.sqrt(s * (s - ab) * (s - bc) * (s - ac));
+                    if (Double.isNaN(area) || Double.isInfinite(area)) {
+                        continue;
+                    }
+                    max = Math.max(max, area);
+                }
+            }
+        }
+        return max;
+    }
+    private double line(int[] a, int[] b) {
+        return Math.sqrt(Math.pow(Math.abs(a[0] - b[0]), 2) + Math.pow(Math.abs(a[1] - b[1]), 2));
+    }
+
+    public boolean isAlienSorted(String[] words, String order) {
+        // 953
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < order.length(); i++) {
+            map.put(order.charAt(i), i);
+        }
+        for (int i = 1; i < words.length; i++) {
+            String word0 = words[i - 1];
+            String word1 = words[i];
+            if (word1.contains(word0)) {
+                continue;
+            }
+            if (word0.contains(word1)) {
+                return false;
+            }
+            int n = Math.min(word0.length(), word1.length());
+            for (int j = 0; j < n; j++) {
+                if (map.get(word0.charAt(j)) > map.get(word1.charAt(j))) {
+                    return false;
+                } else if (map.get(word0.charAt(j)) < map.get(word1.charAt(j))) {
+                    break;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int searchInsert(int[] nums, int target) {
+        // 35 O(n)
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            if (nums[i] >= target) {
+                return i;
+            }
+        }
+        return n;
+    }
+    public int searchInsert2(int[] nums, int target) {
+        // 35 O(log n)
+        int n = nums.length;
+        if (n == 1) {
+            return nums[0] >= target ? 0 : 1;
+        }
+        if (target <= nums[0]) {
+            return 0;
+        }
+        if (target > nums[n - 1]) {
+            return n;
+        }
+        int left = 0;
+        int right = n - 1;
+        while (1 < right - left) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] < target) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        if (nums[left] > target) {
+            return left;
+        }
+        if (nums[right] < target) {
+            return right + 1;
+        }
+        return right;
+    }
+
+    public boolean isValid(String s) {
+        // 20 栈
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '(' || c == '{' || c == '[') {
+                stack.push(c);
+            } else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                Character pop = stack.pop();
+                if (pop == '(' && c != ')') {
+                    return false;
+                }
+                if (pop == '{' && c != '}') {
+                    return false;
+                }
+                if (pop == '[' && c != ']') {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public boolean isUnivalTree(TreeNode root) {
+        // 965
+        int value = root.val;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            if (poll == null) {
+                continue;
+            }
+            if (poll.val != value) {
+                return false;
+            }
+            queue.offer(poll.left);
+            queue.offer(poll.right);
+        }
+        return true;
+    }
+
+    public int repeatedNTimes(int[] nums) {
+        // 961
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            if (set.contains(num)) {
+                return num;
+            } else {
+                set.add(num);
+            }
+        }
+        return 0;
+    }
+
+    public String removeOuterParentheses(String s) {
+        // 1021
+        StringBuilder sb = new StringBuilder();
+        int prev = 0;
+        int split = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if ('(' == c) {
+                split++;
+            } else {
+                split--;
+            }
+            if (split == 0) {
+                if (prev + 1 < i) {
+                    sb.append(s, prev + 1, i);
+                }
+                prev = i + 1;
+            }
+        }
+        return sb.toString();
+    }
+
+    public boolean isBoomerang(int[][] points) {
+        // 1037
+        int[] ab = new int[] {points[1][0] - points[0][0], points[1][1] - points[0][1]};
+        int[] bc = new int[] {points[2][0] - points[1][0], points[2][1] - points[1][1]};
+        return ab[0] * bc[1] - ab[1] * bc[0] != 0;
+    }
+
+    public int heightChecker(int[] heights) {
+        // 1051 计数排序
+        int[] counts = new int[101];
+        for (int height : heights) {
+            counts[height]++;
+        }
+        int ans = 0, index = 0;
+        for (int i = 1; i <= 100; i++) {
+            for (int j = 1; j <= counts[i]; j++) {
+                if (heights[index] != i) {
+                    ans++;
+                }
+                index++;
+            }
+        }
+        return ans;
+    }
+
+    public void duplicateZeros(int[] arr) {
+        // 1089
+        int n = arr.length;
+        // find it duplicate it and move other, cause 1 <= n <= 10000 timeout
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 0 && i + 1 < n) {
+                for (int j = n - 1; j > i; j--) {
+                    arr[j] = arr[j - 1];
+                }
+                i++;
+            }
+        }
+    }
+
+    public void duplicateZeros2(int[] arr) {
+        // 1089
+        int n = arr.length;
+        Queue<Integer> queue = new LinkedList<>();
+        // eat eggs and lay eggs
+        for (int out = 0, in = 0; out < n; out++, in++) {
+            queue.offer(arr[in]);
+            if (arr[in] == 0) {
+                queue.offer(arr[in]);
+            }
+            arr[out] = queue.poll();
+        }
+    }
+
+    public void duplicateZeros3(int[] arr) {
+        int n = arr.length;
+        int top = 0;
+        int i = -1;
+        while (top < n) {
+            i++;
+            if (arr[i] != 0) {
+                top++;
+            } else {
+                top += 2;
+            }
+        }
+        int j = n - 1;
+        if (top == n + 1) {
+            arr[j] = 0;
+            j--;
+            i--;
+        }
+        while (j >= 0) {
+            arr[j] = arr[i];
+            j--;
+            if (arr[i] == 0) {
+                arr[j] = arr[i];
+                j--;
+            }
+            i--;
+        }
+    }
+
+    // 1175 1 <= n <= 100
+    int[] table = new int[] {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
+    int mod = 1000000007;
+    public int numPrimeArrangements(int n) {
+        int primeNum = 0;
+        for (int prime : table) {
+            if (prime <= n) {
+                primeNum++;
+            } else {
+                break;
+            }
+        }
+        int compositeNum = n - primeNum;
+        long ans = 1;
+        for (int i = 2; i <= primeNum; i++) {
+            ans *= i;
+            ans %= mod;
+        }
+        for (int i = 2; i <= compositeNum; i++) {
+            ans *= i;
+            ans %= mod;
+        }
+        // 模 mod (10^9 + 7)
+        return (int) ans % mod;
+    }
+
     public static void main(String[] args) {
-        String word = toBin(8);
-        System.out.println(word);
+        try {
+            // 12
+            // 682289015
+            int x = new N().numPrimeArrangements(100);
+            System.out.println(x);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -10,3 +10,15 @@
 思路二 埃拉托斯特尼筛法
 原理：要得到自然数n以内的全部素数，必须把不大于 √n 的所有素数的倍数剔除，剩下的就是素数。
 方法：从 2 开始到 √n 结束，遍历剔除即可。
+代码：
+  public boolean isPrime(int n) {
+        if (n == 1) {
+            return false;
+        }
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }

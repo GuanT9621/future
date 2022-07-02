@@ -1,4 +1,4 @@
-package algorithm.sort;
+package algorithm.排序;
 
 /**
  * 快速排序，又称划分交换排序（partition-exchange algorithm.sort）

@@ -739,13 +739,113 @@ public class N {
         return ab[0] * bc[1] - ab[1] * bc[0] != 0;
     }
 
+    public int heightChecker(int[] heights) {
+        // 1051 计数排序
+        int[] counts = new int[101];
+        for (int height : heights) {
+            counts[height]++;
+        }
+        int ans = 0, index = 0;
+        for (int i = 1; i <= 100; i++) {
+            for (int j = 1; j <= counts[i]; j++) {
+                if (heights[index] != i) {
+                    ans++;
+                }
+                index++;
+            }
+        }
+        return ans;
+    }
+
+    public void duplicateZeros(int[] arr) {
+        // 1089
+        int n = arr.length;
+        // find it duplicate it and move other, cause 1 <= n <= 10000 timeout
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 0 && i + 1 < n) {
+                for (int j = n - 1; j > i; j--) {
+                    arr[j] = arr[j - 1];
+                }
+                i++;
+            }
+        }
+    }
+
+    public void duplicateZeros2(int[] arr) {
+        // 1089
+        int n = arr.length;
+        Queue<Integer> queue = new LinkedList<>();
+        // eat eggs and lay eggs
+        for (int out = 0, in = 0; out < n; out++, in++) {
+            queue.offer(arr[in]);
+            if (arr[in] == 0) {
+                queue.offer(arr[in]);
+            }
+            arr[out] = queue.poll();
+        }
+    }
+
+    public void duplicateZeros3(int[] arr) {
+        int n = arr.length;
+        int top = 0;
+        int i = -1;
+        while (top < n) {
+            i++;
+            if (arr[i] != 0) {
+                top++;
+            } else {
+                top += 2;
+            }
+        }
+        int j = n - 1;
+        if (top == n + 1) {
+            arr[j] = 0;
+            j--;
+            i--;
+        }
+        while (j >= 0) {
+            arr[j] = arr[i];
+            j--;
+            if (arr[i] == 0) {
+                arr[j] = arr[i];
+                j--;
+            }
+            i--;
+        }
+    }
+
+    // 1175 1 <= n <= 100
+    int[] table = new int[] {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97};
+    int mod = 1000000007;
+    public int numPrimeArrangements(int n) {
+        int primeNum = 0;
+        for (int prime : table) {
+            if (prime <= n) {
+                primeNum++;
+            } else {
+                break;
+            }
+        }
+        int compositeNum = n - primeNum;
+        long ans = 1;
+        for (int i = 2; i <= primeNum; i++) {
+            ans *= i;
+            ans %= mod;
+        }
+        for (int i = 2; i <= compositeNum; i++) {
+            ans *= i;
+            ans %= mod;
+        }
+        // 模 mod (10^9 + 7)
+        return (int) ans % mod;
+    }
 
     public static void main(String[] args) {
         try {
-            String[] words = new String[]{"hello","leetcode"};
-            String order = "hlabcdefgijkmnopqrstuvwxyz";
-            boolean v = new N().isAlienSorted(words, order);
-            System.out.println(v);
+            // 12
+            // 682289015
+            int x = new N().numPrimeArrangements(100);
+            System.out.println(x);
         } catch (Exception e) {
             e.printStackTrace();
         }

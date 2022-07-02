@@ -1,4 +1,4 @@
-package algorithm.sort;
+package algorithm.排序;
 
 /**
  * 计数排序（Counting Sort）

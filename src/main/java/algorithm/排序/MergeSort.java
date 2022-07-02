@@ -1,4 +1,4 @@
-package algorithm.sort;
+package algorithm.排序;
 
 /**
  * 归并排序（Merge Sort）

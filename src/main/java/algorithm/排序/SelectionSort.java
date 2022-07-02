@@ -1,4 +1,4 @@
-package algorithm.sort;
+package algorithm.排序;
 
 /**
  * 选择排序(Selection-algorithm.sort)

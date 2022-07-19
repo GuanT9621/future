@@ -24,8 +24,7 @@ public class SegmentTree {
      */
     public void update(Node node, int start, int end, int l, int r, int val) {
         if (l <= start && end <= r) {
-            // update number use =
-            // add number use +=
+            // update number use = , add number use +=
             node.sum = (end - start + 1) * val;
             node.add = val;
             return;

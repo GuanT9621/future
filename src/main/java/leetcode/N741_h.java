@@ -63,7 +63,7 @@ public class N741_h {
         }
     }
 
-    // 超时优化
+    /** 超时优化 */
     class Solution2 {
         boolean over = false;
 

@@ -840,12 +840,132 @@ public class N {
         return (int) ans % mod;
     }
 
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
+        // 1200
+        Arrays.sort(arr);
+        int sub = Integer.MAX_VALUE;
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < arr.length - 1; i++) {
+            int delta = arr[i + 1] - arr[i];
+            if (delta < sub) {
+                sub = delta;
+                ans.clear();
+                ans.add(Arrays.asList(arr[i], arr[i + 1]));
+            } else if (delta == sub) {
+                ans.add(Arrays.asList(arr[i], arr[i + 1]));
+            }
+        }
+        return ans;
+    }
+
+    // begin 1
+    private String makeNetGateIndex(int index) {
+        StringBuilder sb = new StringBuilder();
+        do {
+            index--;
+            sb.append ((char) ('a' + index % 26));
+            index = index / 26;
+        } while (index > 0);
+        return sb.reverse().toString();
+    }
+
+    public int oddCells2(int m, int n, int[][] indices) {
+        // 1252 ^ false is even. true is odd.
+        boolean[] ms = new boolean[m];
+        boolean[] ns = new boolean[n];
+        for (int[] i : indices) {
+            ms[i[0]] ^= true;
+            ns[i[1]] ^= true;
+        }
+        int ans = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (ms[i] ^ ns[j]) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
+    }
+    public int oddCells3(int m, int n, int[][] indices) {
+        // 1252 ^ false is even. true is odd.
+        boolean[] ms = new boolean[m];
+        boolean[] ns = new boolean[n];
+        int mo = 0;
+        int no = 0;
+        for (int[] i : indices) {
+            ms[i[0]] = !ms[i[0]];
+            ns[i[1]] = !ns[i[1]];
+            mo += ms[i[0]] ? 1 : -1;
+            no += ns[i[1]] ? 1 : -1;
+        }
+        return mo * (n - no) + no * (m - mo);
+    }
+    public int oddCells4(int m, int n, int[][] ins) {
+        // 1252 ^ long only m, n < 50
+        long c1 = 0, c2 = 0;
+        for (int[] info : ins) {
+            c1 ^= 1L << info[0];
+            c2 ^= 1L << info[1];
+        }
+        int a = 0, b = 0;
+        for (int i = 0; i < m; i++)
+            a += ((c1 >> i) & 1);
+        for (int i = 0; i < n; i++)
+            b += ((c2 >> i) & 1);
+        return a * (n - b) + (m - a) * b;
+    }
+
+    public int minCostToMoveChips(int[] position) {
+        // 1217
+        int p1 = 0;
+        int p2 = 0;
+        for (int i : position) {
+            if (i % 2 == 0)
+                p2++;
+            else
+                p1++;
+        }
+        return Math.min(p1, p2);
+    }
+
+    class MovingAverage {
+        // 346
+        int[] array;
+        int size;
+        int use;
+        int i;
+        double sum;
+
+        public MovingAverage(int size) {
+            this.array = new int[size];
+            this.size = size;
+            this.use = 0;
+            this.i = 0;
+            this.sum = 0D;
+        }
+
+        public double next(int val) {
+            if (use == size) {
+                sum -= array[i];
+            } else {
+                use++;
+            }
+            sum += val;
+            array[i] = val;
+            i++;
+            i %= size;
+            return sum / use;
+        }
+    }
+
     public static void main(String[] args) {
         try {
-            // 12
-            // 682289015
-            int x = new N().numPrimeArrangements(100);
-            System.out.println(x);
+            // 26aa 51 az 52 ba
+            for (int i = 1; i < 800; i++) {
+                String x = new N().makeNetGateIndex(i);
+                System.out.println(i + " = " + x);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

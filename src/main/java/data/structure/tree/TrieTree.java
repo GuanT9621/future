@@ -2,6 +2,13 @@ package data.structure.tree;
 
 public class TrieTree {
 
+//    极简版的字典树
+//    class Trie{
+//        Map<Character, Trie> children;
+//        public Trie() {
+//            children = new HashMap<Character, Trie>();
+//        }
+//    }
 
     class Trie {
         char value; // 词

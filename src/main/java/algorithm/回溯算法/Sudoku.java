@@ -6,8 +6,14 @@ package algorithm.回溯算法;
  *
  */
 public class Sudoku {
+    int n = 9;
+    int[][] table;
 
-    public void sudokuAns(int[][] table) {
+    public Sudoku(int[][] table) {
+        this.table = table;
+    }
+
+    public void sudokuAns() {
 
     }
 
@@ -15,9 +21,19 @@ public class Sudoku {
 
     }
 
+    private boolean judge(int x, int y) {
+        for (int i = 0; i < n; i++) {
+
+        }
+        for (int j = 0; j < n; j++) {
+
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         int[][] table = new int[9][9];
-        new Sudoku().sudokuAns(table);
+        new Sudoku(table).sudokuAns();
         for (int[] ints : table) {
             for (int anInt : ints) {
                 System.out.print(anInt + " ");

@@ -24,7 +24,9 @@ public class SegmentTree {
      */
     public void update(Node node, int start, int end, int l, int r, int val) {
         if (l <= start && end <= r) {
-            node.sum += (end - start + 1) * val;
+            // update number use =
+            // add number use +=
+            node.sum = (end - start + 1) * val;
             node.add = val;
             return;
         }
@@ -47,7 +49,8 @@ public class SegmentTree {
     public int query(Node node, int start, int end, int l, int r) {
         if (l <= start && end <= r)
             return node.sum;
-        int mid = (start + end) >> 1, ans = 0;
+        int mid = (start + end) >> 1;
+        int ans = 0;
         pushDown(node, mid - start + 1, end - mid);
         if (l <= mid) ans += query(node.left, start, mid, l, r);
         if (r > mid) ans += query(node.right, mid + 1, end, l, r);
@@ -77,11 +80,15 @@ public class SegmentTree {
 
     public static void main(String[] args) {
         // 0, 20
-        SegmentTree segmentTree = new SegmentTree();
-        Node node = segmentTree.new Node();
-        segmentTree.update(node, 0, 20, 1, 4, 1);
-        segmentTree.update(node, 0, 20, 1, 8, 3);
-        int query = segmentTree.query(node, 0, 20, 3, 5);
-        System.out.println(query);
+        SegmentTree tree = new SegmentTree();
+        Node node = tree.new Node();
+        tree.update(node, 0, 20, 1, 4, 1);
+        System.out.println(tree.query(node, 0, 20, 3, 5));
+
+        tree.update(node, 0, 20, 3, 4, 1);
+        System.out.println(tree.query(node, 0, 20, 3, 5));
+
+        tree.update(node, 0, 20, 1, 8, 3);
+        System.out.println(tree.query(node, 0, 20, 3, 5));
     }
 }

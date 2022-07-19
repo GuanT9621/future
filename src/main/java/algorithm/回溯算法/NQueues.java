@@ -25,25 +25,25 @@ package algorithm.回溯算法;
  */
 public class NQueues {
 
-    int max;
+    int queues;
     int[] array;
     int count;
 
     public NQueues(int queues) {
-        this.max = queues;
+        this.queues = queues;
         this.array = new int[queues];
         this.count = 0;
     }
 
     // 给第 n 行放皇后
     public void backtracking(int n) {
-        if (n == max) {
+        if (n == queues) {
             print();
             count++;
             return;
         }
         // 尝试在这一行的每一个位置放置皇后，如果可以放就进入下一行。
-        for (int i = 0; i < max; i++) {
+        for (int i = 0; i < queues; i++) {
             array[n] = i;
             if (judge(n)) {
                 backtracking(n + 1);

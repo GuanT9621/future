@@ -17,42 +17,71 @@ import java.util.stream.Collectors;
  * 思路1 与39题一样 回溯DFS 然后排序去重复
  * 会出现超时
  *
- * 思路2
+ * 思路2 回溯 + 哈希表（处理重复问题）
  *
  */
 public class N40_m {
-    Set<List<Integer>> ans = new HashSet<>();
 
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        dfs(candidates, target, 0, new ArrayList<>());
-        for (List<Integer> list : ans) {
-            list.sort(Integer::compareTo);
+    class Solution {
+        Set<List<Integer>> ans = new HashSet<>();
+
+        public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+            dfs(candidates, target, 0, new ArrayList<>());
+            for (List<Integer> list : ans) {
+                list.sort(Integer::compareTo);
+            }
+            return new ArrayList<>(ans);
         }
-        return new ArrayList<>(ans);
+
+        private void dfs(int[] candidates, int target, int s, List<Integer> list) {
+            if (target == 0) {
+                // todo
+                // copy elements
+                ArrayList<Integer> arrayList = new ArrayList<>(list);
+                arrayList.sort(Integer::compareTo);
+                ans.add(arrayList);
+                return;
+            }
+            for (int i = s; i < candidates.length; i++) {
+                int num = candidates[i];
+                if (num > target) {
+                    continue;
+                }
+                list.add(num);
+                dfs(candidates, target - num, i + 1, list);
+                // 回溯
+                list.remove(list.size() - 1);
+            }
+        }
     }
 
-    private void dfs(int[] candidates, int target, int s, List<Integer> list) {
-        if (target == 0) {
-            // copy elements
-            ArrayList<Integer> arrayList = new ArrayList<>(list);
-            arrayList.sort(Integer::compareTo);
-            ans.add(arrayList);
-            return;
+    class Solution2 {
+        Set<List<Integer>> ans = new HashSet<>();
+
+        public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+            backtracking(candidates, target, 0, new ArrayList<>());
+            return new ArrayList<>(ans);
         }
-        for (int i = s; i < candidates.length; i++) {
-            int num = candidates[i];
-            if (num > target) {
-                continue;
+
+        private void backtracking(int[] candidates, int target, int index, List<Integer> temp) {
+            if (target == 0) {
+                ArrayList<Integer> arrayList = new ArrayList<>(temp);
+                arrayList.sort(Integer::compareTo);
+                ans.add(arrayList);
+                return;
             }
-            list.add(num);
-            dfs(candidates, target - num, i + 1, list);
-            // 回溯
-            list.remove(list.size() - 1);
+            if (target < 0 || index >= candidates.length) {
+                return;
+            }
+            ArrayList<Integer> list = new ArrayList<>(temp);
+            backtracking(candidates, target, index + 1, list);
+            list.add(candidates[index]);
+            backtracking(candidates, target - candidates[index], index + 1, list);
         }
     }
 
     public static void main(String[] args) {
-        List<List<Integer>> lists = new N40_m().combinationSum2(new int[]{10,1,2,7,6,1,5}, 8);
+        List<List<Integer>> lists = new N40_m().new Solution2().combinationSum2(new int[]{10,1,2,7,6,1,5}, 8);
         for (List<Integer> list : lists) {
             System.out.println(list.stream().map(Objects::toString).collect(Collectors.joining(",")));
         }

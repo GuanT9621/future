@@ -959,6 +959,15 @@ public class N {
         }
     }
 
+    public String generateTheString(int n) {
+        // 1374
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n - 1; i++) {
+            sb.append('a');
+        }
+        return n % 2 == 0 ? sb.append('b').toString() : sb.append('a').toString();
+    }
+
     public static void main(String[] args) {
         try {
             // 26aa 51 az 52 ba

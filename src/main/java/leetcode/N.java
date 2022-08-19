@@ -968,13 +968,190 @@ public class N {
         return n % 2 == 0 ? sb.append('b').toString() : sb.append('a').toString();
     }
 
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        // 1260
+        int n = grid.length;
+        int m = grid[0].length;
+        int p = k % (n * m);
+        int[][] put = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int x = (i * m + j + p) / m % n;
+                int y = (i * m + j + p) % m;
+                put[x][y] = grid[i][j];
+            }
+        }
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int[] line : put) {
+            List<Integer> list = new ArrayList<>();
+            for (int i : line) {
+                list.add(i);
+            }
+            ans.add(list);
+        }
+        return ans;
+    }
+
+
+    public int[] arrayRankTransform(int[] arr) {
+        // 1331
+        int n = arr.length;
+        int[] ans = new int[n];
+        for (int i = 0; i < n; i++) {
+            int a = arr[i];
+            int ai = 1;
+            Set<Integer> count = new HashSet<>();
+            for (int j : arr) {
+                if (j < a && !count.contains(j)) {
+                    count.add(j);
+                    ai++;
+                }
+            }
+            ans[i] = ai;
+        }
+        return ans;
+    }
+
+    public int[] arrayRankTransform2(int[] arr) {
+        // 1331
+        int[] clone = arr.clone();
+        int[] sortedArr = Arrays.stream(clone).sorted().distinct().toArray();
+        int[] ans = new int[arr.length];
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < sortedArr.length; i++) {
+            map.put(sortedArr[i], i + 1);
+        }
+        for (int i = 0; i < arr.length; i++) {
+            ans[i] = map.get(arr[i]);
+        }
+        return ans;
+    }
+
+    public List<Integer> minSubsequence(int[] nums) {
+        // 1403
+        List<Integer> ans = new ArrayList<>();
+        Arrays.sort(nums);
+        int n = nums.length;
+        int head = Arrays.stream(nums).sum();
+        int tail = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            head -= nums[i];
+            tail += nums[i];
+            ans.add(nums[i]);
+            if (tail > head) {
+                break;
+            }
+        }
+        return ans;
+    }
+
+    public int minStartValue(int[] nums) {
+        // 1413
+        int sum = 0;
+        int min = 0;
+        for (int num : nums) {
+            sum += num;
+            min = Math.min(sum, min);
+        }
+        return min * -1 + 1;
+    }
+
+    public String reformat(String s) {
+        // 1417 number-word
+        int n = s.length();
+        if (n == 1)
+            return s;
+        int i1 = 0;
+        int i2 = 1;
+        int c1 = 0;
+        int c2 = 0;
+        char[] cs = new char[n + 1];
+        for (char c : s.toCharArray()) {
+            if ('0' <= c && c <= '9') {
+                if (i1 > n) {
+                    return "";
+                }
+                cs[i1] = c;
+                i1 += 2;
+                c1++;
+            } else {
+                if (i2 > n) {
+                    return "";
+                }
+                cs[i2] = c;
+                i2 += 2;
+                c2++;
+            }
+        }
+        if (Math.abs(c1 - c2) > 1) {
+            return "";
+        }
+        if (n % 2 == 0 || cs[n] == '\u0000') {
+            return new String(cs, 0, n);
+        }
+        return cs[n] + new String(cs, 0, n - 1);
+    }
+
+    public boolean CheckPermutation(String s1, String s2) {
+        // m-01.02
+        if (s1.length() != s2.length()) {
+            return false;
+        }
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s1.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        for (char c : s2.toCharArray()) {
+            Integer count = map.get(c);
+            if (count == null) {
+                return false;
+            }
+            count -= 1;
+            if (count == 0) {
+                map.remove(c);
+            } else {
+                map.put(c, count);
+            }
+        }
+        return map.isEmpty();
+    }
+
+    public int maxScore(String s) {
+        // 1422
+        int max = 0;
+        int all = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '1') {
+                all++;
+            }
+        }
+        for (int i = 0; i < s.length() - 1; i++) {
+            char c = s.charAt(i);
+            if (c == '0') {
+                all++;
+            } else {
+                all--;
+            }
+            max = Math.max(max, all);
+        }
+        return max;
+    }
+
+    public int busyStudent(int[] startTime, int[] endTime, int queryTime) {
+        // 1450
+        int ans = 0;
+        int n = startTime.length;
+        for (int i = 0; i < n; i++) {
+            if (startTime[i] <= queryTime && queryTime <= endTime[i])
+                ans++;
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         try {
-            // 26aa 51 az 52 ba
-            for (int i = 1; i < 800; i++) {
-                String x = new N().makeNetGateIndex(i);
-                System.out.println(i + " = " + x);
-            }
+            boolean reformat = new N().CheckPermutation("abca", "bacc");
+            System.out.println(reformat);
         } catch (Exception e) {
             e.printStackTrace();
         }

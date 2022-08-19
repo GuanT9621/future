@@ -16,6 +16,7 @@ public class S_lightAll {
 
 
     public void light(int[] lights) {
+        // todo
         int n = lights.length;
         while (true) {
             boolean end = true;

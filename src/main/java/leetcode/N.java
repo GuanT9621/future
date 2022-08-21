@@ -968,6 +968,33 @@ public class N {
         return n % 2 == 0 ? sb.append('b').toString() : sb.append('a').toString();
     }
 
+    class OrderedStream {
+        // 1656
+        String[] array;
+        int ptr;
+        public OrderedStream(int n) {
+            array = new String[n + 1];
+            ptr = 1;
+        }
+
+        public List<String> insert(int idKey, String value) {
+            array[idKey] = value;
+            List<String> list = new ArrayList<>();
+            if (ptr != idKey) {
+                return list;
+            }
+            for (; ptr < array.length; ptr++) {
+                if (array[ptr] == null) {
+                    ptr++;
+                    break;
+                }
+                list.add(array[ptr]);
+            }
+            ptr--;
+            return list;
+        }
+    }
+
     public List<List<Integer>> shiftGrid(int[][] grid, int k) {
         // 1260
         int n = grid.length;
@@ -1148,10 +1175,23 @@ public class N {
         return ans;
     }
 
+    public int isPrefixOfWord(String sentence, String searchWord) {
+        // 1455
+        String[] s = sentence.split(" ", -1);
+        for (int i = 0; i < s.length; i++) {
+            if (s[i].startsWith(searchWord))
+                return i + 1;
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         try {
-            boolean reformat = new N().CheckPermutation("abca", "bacc");
-            System.out.println(reformat);
+            // 26aa 51 az 52 ba
+            for (int i = 1; i < 800; i++) {
+                String x = new N().makeNetGateIndex(i);
+                System.out.println(i + " = " + x);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

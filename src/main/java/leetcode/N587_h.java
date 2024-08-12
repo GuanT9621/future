@@ -5,21 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * https://leetcode-cn.com/problems/erect-the-fence/
+ * <a href="https://leetcode-cn.com/problems/erect-the-fence/">leetcode题目</a>
+ * <a href="https://oi-wiki.org/geometry/convex-hull/">OIWiki</a>
  * 安装栅栏
  * 在一个二维的花园中，有一些用 (x, y) 坐标表示的树。由于安装费用十分昂贵，你的任务是先用最短的绳子围起所有的树。
  * 只有当所有的树都被绳子包围时，花园才能围好栅栏。你需要找到正好位于栅栏边界上的树的坐标。
  *
- * 思路一 推理
- * 1 先找到最上下左右的 position
- * 2 找到在上下左右连线之外的节点
- *
- * 思路二 经典的求凸包的算法
  * 答案一 Jarvis 算法
  * 答案二 Graham 算法
  * 答案三 Andrew 算法
  */
 public class N587_h {
+
     public static int[][] outerTreesJarvis(int[][] trees) {
         return new int[0][0];
     }
@@ -118,10 +115,11 @@ public class N587_h {
     }
 
     public static void main(String[] args) {
-//        int[][] input = new int[][] {{1,1}, {2,2}, {2,0}, {2,4}, {3,3}, {4,2}};
-        int[][] input = new int[][] {{5,5},{4,8},{1,3},{5,9},{3,0},{0,4},{3,2},{8,9},{9,3}};
-        int[][] ints = outerTrees(input);
-        for (int[] anInt : ints) {
+        // 输入: points = [[1,1],[2,2],[2,0],[2,4],[3,3],[4,2]]
+        // 输出: [[1,1],[2,0],[3,3],[2,4],[4,2]]
+        int[][] input = new int[][] {{1,1},{2,2},{2,0},{2,4},{3,3},{4,2}};
+        int[][] output = outerTrees(input);
+        for (int[] anInt : output) {
             System.out.println(Arrays.toString(anInt));
         }
     }

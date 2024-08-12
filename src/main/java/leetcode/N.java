@@ -1185,6 +1185,22 @@ public class N {
         return -1;
     }
 
+    public int numSpecial(int[][] mat) {
+        // 1582
+        int row = mat.length, colum = mat[0].length;
+        int[] rowSum = new int[row], columSum = new int[colum];
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < colum; j++) rowSum[i] += mat[i][j];
+        for (int i = 0; i < colum; i++)
+            for (int j = 0; j < row; j++) columSum[i] += mat[j][i];
+        int ans = 0;
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < colum; j++)
+                if (mat[i][j] == 1 && rowSum[i] == 1 && columSum[j] == 1)
+                    ans++;
+        return ans;
+    }
+
     public static void main(String[] args) {
         try {
             // 26aa 51 az 52 ba
